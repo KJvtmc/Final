@@ -51,6 +51,7 @@ export class CompensationApplicationListContainer extends Component {
         if (page < 0) page = 0;
 
         var uri = `${apiEndpoint}/api/naujas_kompensacija/manager/page?page=${page}&size=${pageSize}`;
+        
 
         if (submitedAt !== "") {
             const encodedDate = encodeURIComponent(submitedAt);
@@ -61,7 +62,7 @@ export class CompensationApplicationListContainer extends Component {
             http
             .get(uri)
             .then((response) => {
-
+                console.log(response)
                 this.setState({
                     kompensacijos: response.data.content,
                     totalPages: response.data.totalPages,
@@ -88,6 +89,33 @@ export class CompensationApplicationListContainer extends Component {
         this.getCompensationApplicationInfo(page, this.state.searchQuery);
     };
 
+    changeStatusTrue = (id) => {
+        var uriPut = `${apiEndpoint}/api/naujas_kompensacija/main/update/${id}`;
+        let kompensacija = this.state.kompensacijos.find(kompensacija => kompensacija.id === id)
+        if (kompensacija){
+            http.put(uriPut, {...kompensacija, status:true}).then((response)=>{
+                if (response.data === "Atnaujinta sėkmingai" ){
+                    let newArray = [...this.state.kompensacijos]
+                    newArray = newArray.map(item => item.id === id ? {...item, status:true} : item)
+                    this.setState({kompensacijos:newArray})
+                }
+            })
+        }
+    }
+
+    changeStatusFalse = (id) => {
+        var uriPut = `${apiEndpoint}/api/naujas_kompensacija/main/update/${id}`;
+        let kompensacija = this.state.kompensacijos.find(kompensacija => kompensacija.id === id)
+        if (kompensacija){
+            http.put(uriPut, {...kompensacija, status:false}).then((response)=>{
+                if (response.data === "Atnaujinta sėkmingai" ){
+                    let newArray = [...this.state.kompensacijos]
+                    newArray = newArray.map(item => item.id === id ? {...item, status:false} : item)
+                    this.setState({kompensacijos:newArray})
+                }
+            })
+        }
+    }
 
 
     render() {
@@ -113,6 +141,8 @@ export class CompensationApplicationListContainer extends Component {
                         <CompensationApplicationListTable
                             kompensacijos={kompensacijos}
                             errorMessages={errorMessages}
+                            changeStatusTrue = {this.changeStatusTrue}
+                            changeStatusFalse = {this.changeStatusFalse}
                             onEscape={this.handleEscape}
                             search={searchQuery}
                         />

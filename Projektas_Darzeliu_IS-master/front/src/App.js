@@ -12,25 +12,20 @@ import Admin from "./components/04Admin/AdminContainer";
 import UserListContainer from "./components/04Admin/UserListContainer";
 import KindergartenContainer from "./components/05Kindergarten/KindergartenContainer";
 import UpdateProfileFormContainer from "./components/06UpdateProfile/UpdateProfileFormContainer";
-import CreateApplicationFormContainer from "./components/07Application/CreateApplicationFormContainer";
 import CreateCompensationApplicationFormContainer from "./components/17CompensationApplication/CreateCompensationApplicationFormContainer";
 import AdminNavBar from "./components/00Navigation/AdminNavBar";
 import UserNavBar from "./components/00Navigation/UserNavBar";
-import ManagerNavBar from "./components/00Navigation/ManagerNavBar";
 
 import AuthContext from "./components/11Context/AuthContext";
 import http from "./components/10Services/httpService";
 import CommonErrorHandler from "./components/10Services/CommonErrorHandler";
 import apiEndpoint from "./components/10Services/endpoint";
 import { UserHomeContainer } from "./components/02Main/UserHomeContainer";
-import { KindergartenStatContainer } from "./components/09Statistics/KindergartenStatContainer";
-import { QueueContainer } from "./components/12Queue/QueueContainer";
-import UserDocumentContainer from "./components/13UserDocuments/UserDocumentContainer";
-import { ApplicationStatusContainer } from './components/04Admin/ApplicationStatusContainer';
 import EventJournalContainer from "./components/14EventJournal/EventJournalContainer";
 import CompensationApplicationListContainer from "./components/17CompensationApplication/CompensationApplicationListContainer";
-import ManagerDocumentContainer from "./components/15ManagerDocuments/ManagerDocumentContainer";
 import NewAccountContainer from "./components/01Login/NewAccountContainer";
+import ItemContainer from "./components/Items/ItemContainer"
+import GroupsContainer from "./components/Groups/GroupsContainer"
 
 var initState = {
   isAuthenticated: null,
@@ -117,16 +112,6 @@ function App() {
                     <Route exact path="/admin" component={Admin} />
                     <Route
                       exact
-                      path="/statistika"
-                      component={KindergartenStatContainer}
-                    />
-                    <Route
-                      exact
-                      path="/prasymai/statusas"
-                      component={ApplicationStatusContainer}
-                    />
-                    <Route
-                      exact
                       path="/naudotojai"
                       component={UserListContainer}
                     />
@@ -140,47 +125,27 @@ function App() {
                       path="/profilis/atnaujinti"
                       component={UpdateProfileFormContainer}
                     />
-                    <Route path="*" component={NotFound} />
-                  </Switch>
-                </AdminNavBar>
-              </div>
-            </CommonErrorHandler>
-          </AuthContext.Provider>
-        );
-      case "MANAGER":
-        return (
-          <AuthContext.Provider value={{ state, dispatch }}>
-            <CommonErrorHandler>
-              <div className="container-fluid px-0">
-                <ManagerNavBar>
-                  <Switch>
-                    <Route exact path="/" component={KindergartenContainer} />
                     <Route
                       exact
-                      path="/home"
+                      path="/tiekejai"
                       component={KindergartenContainer}
                     />
                     <Route
                       exact
-                      path="/dokumentai"
-                      component={ManagerDocumentContainer}
+                      path="/produktai"
+                      component={ItemContainer}
                     />
                     <Route
                       exact
-                      path="/statistika"
-                      component={KindergartenStatContainer}
+                      path="/grupes"
+                      component={GroupsContainer}
                     />
+
                     <Route
                       exact
-                      path="/darzeliai"
-                      component={KindergartenContainer}
-                    />
-                    <Route
-                      exact
-                      path="/kompensacijos"
+                      path="/prasymai"
                       component={CompensationApplicationListContainer}
                     />
-                    <Route exact path="/eile" component={QueueContainer} />
                     <Route
                       exact
                       path="/profilis/atnaujinti"
@@ -188,7 +153,7 @@ function App() {
                     />
                     <Route path="*" component={NotFound} />
                   </Switch>
-                </ManagerNavBar>
+                </AdminNavBar>
               </div>
             </CommonErrorHandler>
           </AuthContext.Provider>
@@ -209,16 +174,6 @@ function App() {
                     />
                     <Route
                       exact
-                      path="/statistika"
-                      component={KindergartenStatContainer}
-                    />
-                    <Route
-                      exact
-                      path="/prasymai/naujas_registracija"
-                      component={CreateApplicationFormContainer}
-                    />
-                    <Route
-                      exact
                       path="/prasymai/naujas_kompensacija"
                       component={CreateCompensationApplicationFormContainer}
                     />
@@ -226,11 +181,6 @@ function App() {
                       exact
                       path="/profilis/atnaujinti"
                       component={UpdateProfileFormContainer}
-                    />
-                    <Route
-                      exact
-                      path="/pazymos"
-                      component={UserDocumentContainer}
                     />
                     <Route path="*" component={NotFound} />
                   </Switch>

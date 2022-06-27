@@ -23,8 +23,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import it.akademija.application.Application;
-import it.akademija.compensationapplication.CompensationApplication;
+import it.akademija.order.OrderEntity;
 import it.akademija.role.Role;
 
 @Entity
@@ -81,11 +80,7 @@ public class User {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "mainGuardian", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-	private Set<Application> userApplications;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "mainGuardian", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-	private Set<CompensationApplication> userCompensationApplications;
+	private Set<OrderEntity> userCompensationApplications;
 
 	public User() {
 	}
@@ -125,19 +120,12 @@ public class User {
 		this.username = username;
 	}
 
-	public void setUserApplications(Set<Application> userApplications) {
-		this.userApplications = userApplications;
-	}
 
-	public Set<Application> getUserApplications() {
-		return userApplications;
-	}
-
-	public Set<CompensationApplication> getUserCompensationApplications() {
+	public Set<OrderEntity> getUserCompensationApplications() {
 		return userCompensationApplications;
 	}
 
-	public void setUserCompensationApplications(Set<CompensationApplication> userCompensationApplications) {
+	public void setUserCompensationApplications(Set<OrderEntity> userCompensationApplications) {
 		this.userCompensationApplications = userCompensationApplications;
 	}
 

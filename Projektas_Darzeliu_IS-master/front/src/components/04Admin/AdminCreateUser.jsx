@@ -37,7 +37,6 @@ class AdminCreateUser extends Component {
                     className="form-label">Naudotojo rolė:</label>
                     <select name="role-selector" id="selRole" className="form-select" value={this.state.role} onChange={this.roleDropdownOnChange}>
                         <option value="ADMIN">Administratorius</option>
-                        <option value="MANAGER">Švietimo specialistas</option>
                         <option value="USER">Vaiko atstovas</option>
                     </select>
                 </div>
@@ -62,7 +61,7 @@ class AdminCreateUser extends Component {
     }
 
     drawForm(role) {
-        if (role === "ADMIN" || role === "MANAGER") {
+        if (role === "ADMIN") {
             return (
                 <div className="form">
                     <div className="mb-3">

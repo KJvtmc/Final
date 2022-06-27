@@ -8,7 +8,7 @@ class CompensationApplicationListTable extends Component {
     render() {
         const {
             kompensacijos,
-            search
+            search,
         } = this.props;
         if (search !== "" && kompensacijos.length === 0) {
             return (
@@ -27,6 +27,8 @@ class CompensationApplicationListTable extends Component {
                                 <th>Ugdymo įstaigos pavadinimas</th>
                                 <th>Globėjo vardas, pavardė</th>
                                 <th>Daugiau informacijos</th>
+                                <th>Statusas</th>
+                                <th>Patvirtinti/Atšaukti</th>
                             </tr>
                         </thead>
                         <tbody >
@@ -110,6 +112,15 @@ class CompensationApplicationListTable extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </td>
+                                            <td>{kompensacija.status ? "Patvirtintas": "Nepatvirtintas"}</td>
+                                            <td>
+                                                <button onClick={()=>this.props.changeStatusTrue(kompensacija.id)} type="button" className="btn btn-primary mx-1" >
+                                                    Patvirtinti
+                                                </button>   
+                                                <button onClick={()=>this.props.changeStatusFalse(kompensacija.id)} type="button" className="btn btn-primary mx-1" >
+                                                    Atšaukti
+                                                </button>  
                                             </td>
                                         </React.Fragment>
                                     </tr>

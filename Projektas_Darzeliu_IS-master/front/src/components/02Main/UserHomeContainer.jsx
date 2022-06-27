@@ -14,12 +14,12 @@ export class UserHomeContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            applications: [],
+            // applications: [],
             compensationApplications: [],
-            applicationPagination: {
-                currentPage: 1,
-                postsPerPage: 5,
-            },
+            // applicationPagination: {
+            //     currentPage: 1,
+            //     postsPerPage: 5,
+            // },
             compensationApplicationPagination: {
                 currentPage: 1,
                 postsPerPage: 5,
@@ -27,27 +27,28 @@ export class UserHomeContainer extends Component {
         }
     }
     componentDidMount() {
-        this.getUserApplications();
+        // this.getUserApplications();
         this.getUserCompensationApplications();
     }
 
-    getUserApplications() {
-        http
-            .get(`${apiEndpoint}/api/prasymai/user`)
-            .then((response) => {
+    // getUserApplications() {
+    //     http
+    //         .get(`${apiEndpoint}/api/prasymai/user`)
+    //         .then((response) => {
+    //             console.log(response)
                 
-                this.setState({ applications: response.data });
-                const orderedApplications = this.state.applications.reverse();
-                this.setState({ applications: orderedApplications});
+    //             this.setState({ applications: response.data });
+    //             const orderedApplications = this.state.applications.reverse();
+    //             this.setState({ applications: orderedApplications});
 
-            }).catch(() => {});
-    }
+    //         }).catch(() => {});
+    // }
 
     getUserCompensationApplications() {
         http
             .get(`${apiEndpoint}/api/naujas_kompensacija/user`)
             .then((response) => {
-                
+                console.log(response)
                 this.setState({ compensationApplications: response.data });
                 const orderedCompensationApplications = this.state.compensationApplications.reverse();
                 this.setState({ compensationApplications: orderedCompensationApplications });
@@ -104,39 +105,39 @@ export class UserHomeContainer extends Component {
         });
     }
 
-        getApplications() {
-            const indexOfLastPost = this.state.applicationPagination.currentPage
-             * this.state.applicationPagination.postsPerPage;
-            const indexOfFirstPost = indexOfLastPost - this.state.applicationPagination.postsPerPage;
-            const currentPosts = this.state.applications.slice(indexOfFirstPost, indexOfLastPost);
+        // getApplications() {
+        //     const indexOfLastPost = this.state.applicationPagination.currentPage
+        //      * this.state.applicationPagination.postsPerPage;
+        //     const indexOfFirstPost = indexOfLastPost - this.state.applicationPagination.postsPerPage;
+        //     const currentPosts = this.state.applications.slice(indexOfFirstPost, indexOfLastPost);
 
-            const paginate = pageNumber => this.setState({ applicationPagination: {
-                ...this.state.applicationPagination,
-                currentPage: pageNumber
-            }})
+        //     const paginate = pageNumber => this.setState({ applicationPagination: {
+        //         ...this.state.applicationPagination,
+        //         currentPage: pageNumber
+        //     }})
 
-            if (this.state.applications.length > 0) {
-                return (
-                <>
-                    <h6 className="pl-2 pt-3">Prašymai dėl patekimo į darželius</h6>
-                    <div className="row pt-2">
-                        <div className="col-12 col-sm-12 col-md-12 col-lg-12">
-                            <UserApplicationsTable
-                                applications={currentPosts}
-                                onDelete={this.handleApplicationDelete}
-                            />
-                            <Pagination 
-                                itemsCount={this.state.applications.length}
-                                pageSize={this.state.applicationPagination.postsPerPage} 
-                                currentPage={this.state.applicationPagination.currentPage}
-                                onPageChange={paginate}
-                            />
-                        </div>
-                    </div>
-                </>
-                )
-            }
-        }
+        //     if (this.state.applications.length > 0) {
+        //         return (
+        //         <>
+        //             <h6 className="pl-2 pt-3">Prašymai dėl patekimo į darželius</h6>
+        //             <div className="row pt-2">
+        //                 <div className="col-12 col-sm-12 col-md-12 col-lg-12">
+        //                     <UserApplicationsTable
+        //                         applications={currentPosts}
+        //                         onDelete={this.handleApplicationDelete}
+        //                     />
+        //                     <Pagination 
+        //                         itemsCount={this.state.applications.length}
+        //                         pageSize={this.state.applicationPagination.postsPerPage} 
+        //                         currentPage={this.state.applicationPagination.currentPage}
+        //                         onPageChange={paginate}
+        //                     />
+        //                 </div>
+        //             </div>
+        //         </>
+        //         )
+        //     }
+        // }
 
         getCompensationApplications() {
 
@@ -176,12 +177,12 @@ export class UserHomeContainer extends Component {
         
         render() {
 
-        if (this.state.applications.length + this.state.compensationApplications.length === 0) return <div className="container pt-5"><h6 className="pt-5">Jūs neturite pateiktų prašymų.</h6></div>
+        if (this.state.compensationApplications.length === 0) return <div className="container pt-5"><h6 className="pt-5">Jūs neturite pateiktų prašymų.</h6></div>
 
         return (
 
             <div className="container pt-4" >
-                {this.getApplications()}
+                {/* {this.getApplications()} */}
                 {this.getCompensationApplications()}
                 
             </div>

@@ -10,24 +10,20 @@ import Login from "./components/01Login/LoginContainer";
 import NotFound from "./components/03NotFound/NotFound";
 import Admin from "./components/04Admin/AdminContainer";
 import UserListContainer from "./components/04Admin/UserListContainer";
-import KindergartenContainer from "./components/05Kindrgarten/KindergartenContainer";
+import KindergartenContainer from "./components/05Kindergarten/KindergartenContainer";
 import UpdateProfileFormContainer from "./components/06UpdateProfile/UpdateProfileFormContainer";
-import CreateApplicationFormContainer from "./components/07Application/CreateApplicationFormContainer";
-
+import CreateCompensationApplicationFormContainer from "./components/17CompensationApplication/CreateCompensationApplicationFormContainer";
 import AdminNavBar from "./components/00Navigation/AdminNavBar";
 import UserNavBar from "./components/00Navigation/UserNavBar";
-import ManagerNavBar from "./components/00Navigation/ManagerNavBar";
 
 import AuthContext from "./components/11Context/AuthContext";
 import http from "./components/10Services/httpService";
 import CommonErrorHandler from "./components/10Services/CommonErrorHandler";
 import apiEndpoint from "./components/10Services/endpoint";
 import { UserHomeContainer } from "./components/02Main/UserHomeContainer";
-import { KindergartenStatContainer } from "./components/09Statistics/KindergartenStatContainer";
-import { QueueContainer } from "./components/12Queue/QueueContainer";
-import UserDocumentContainer from "./components/13UserDocuments/UserDocumentContainer";
-import { ApplicationStatusContainer } from './components/04Admin/ApplicationStatusContainer';
 import EventJournalContainer from "./components/14EventJournal/EventJournalContainer";
+import CompensationApplicationListContainer from "./components/17CompensationApplication/CompensationApplicationListContainer";
+import NewAccountContainer from "./components/01Login/NewAccountContainer";
 
 var initState = {
   isAuthenticated: null,
@@ -83,11 +79,10 @@ function App() {
         })
         .catch((error) => {
           const unexpectedError = error.response &&
-                                  error.response.status >= 400 &&
-                                  error.response.status < 500;
-                                  
-          if (!unexpectedError || (error.response && error.response.status === 404))
-          {
+            error.response.status >= 400 &&
+            error.response.status < 500;
+
+          if (!unexpectedError || (error.response && error.response.status === 404)) {
             swal("Įvyko klaida, puslapis nurodytu adresu nepasiekiamas");
             dispatch({
               type: "ERROR",
@@ -115,16 +110,6 @@ function App() {
                     <Route exact path="/admin" component={Admin} />
                     <Route
                       exact
-                      path="/statistika"
-                      component={KindergartenStatContainer}
-                    />
-                     <Route
-                      exact
-                      path="/prasymai/statusas"
-                      component={ApplicationStatusContainer}
-                    />
-                    <Route
-                      exact
                       path="/naudotojai"
                       component={UserListContainer}
                     />
@@ -139,36 +124,18 @@ function App() {
                       component={UpdateProfileFormContainer}
                     />
                     <Route path="*" component={NotFound} />
-                  </Switch>
-                </AdminNavBar>
-              </div>
-            </CommonErrorHandler>
-          </AuthContext.Provider>
-        );
-      case "MANAGER":
-        return (
-          <AuthContext.Provider value={{ state, dispatch }}>
-            <CommonErrorHandler>
-              <div className="container-fluid px-0">
-                <ManagerNavBar>
-                  <Switch>
+                  
                     <Route exact path="/" component={KindergartenContainer} />
-                    <Route
+                    {/* <Route
                       exact
                       path="/home"
                       component={KindergartenContainer}
-                    />
+                    /> */}
                     <Route
                       exact
-                      path="/statistika"
-                      component={KindergartenStatContainer}
+                      path="/kompensacijos"
+                      component={CompensationApplicationListContainer}
                     />
-                    <Route
-                      exact
-                      path="/darzeliai"
-                      component={KindergartenContainer}
-                    />
-                    <Route exact path="/eile" component={QueueContainer} />
                     <Route
                       exact
                       path="/profilis/atnaujinti"
@@ -176,7 +143,7 @@ function App() {
                     />
                     <Route path="*" component={NotFound} />
                   </Switch>
-                </ManagerNavBar>
+                </AdminNavBar>
               </div>
             </CommonErrorHandler>
           </AuthContext.Provider>
@@ -197,23 +164,13 @@ function App() {
                     />
                     <Route
                       exact
-                      path="/statistika"
-                      component={KindergartenStatContainer}
-                    />
-                    <Route
-                      exact
-                      path="/prasymai/naujas"
-                      component={CreateApplicationFormContainer}
+                      path="/prasymai/naujas_kompensacija"
+                      component={CreateCompensationApplicationFormContainer}
                     />
                     <Route
                       exact
                       path="/profilis/atnaujinti"
                       component={UpdateProfileFormContainer}
-                    />
-                    <Route 
-                      exact
-                      path="/pazymos"
-                      component={UserDocumentContainer} 
                     />
                     <Route path="*" component={NotFound} />
                   </Switch>
@@ -231,19 +188,25 @@ function App() {
           </AuthContext.Provider>
         );
     }
-  } else if (state.isAuthenticated === false){
+  } else if (state.isAuthenticated === false) {
     return (
       <div>
         <AuthContext.Provider value={{ state, dispatch }}>
-            <Switch>
-               <Route exact path="/login" component={Login} />
-                <Route path="*">
-                  <Redirect to="/login" />
-                </Route> 
-            </Switch>
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route
+              exact
+              path="/newAccount"
+              component={NewAccountContainer}
+            />
+            <Route path="*">
+              <Redirect to="/login" />
+            </Route>
+          </Switch>
         </AuthContext.Provider>
       </div>
-    );}
+    );
+  }
   else return <Spinner />;
 }
 

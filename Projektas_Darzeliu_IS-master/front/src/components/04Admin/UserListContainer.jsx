@@ -36,6 +36,7 @@ export class UserListContainer extends Component {
     http
       .get(`${apiEndpoint}/passwordresetrequests/getAllRequests`)
       .then((response) => {
+        console.log(response)
         this.setState({
           ...this.state,
           passwordResetRequests: response.data,
@@ -46,6 +47,7 @@ export class UserListContainer extends Component {
     http
       .get(uri)
       .then((response) => {
+        console.log(response)
         this.setState({
           naudotojai: this.mapToViewModel(
             response.data.content,
@@ -117,6 +119,7 @@ export class UserListContainer extends Component {
         http
           .put(`${apiEndpoint}/api/users/admin/password/${username}`)
           .then((response) => {
+            console.log(response)
             const { currentPage, numberOfElements } = this.state;
             const page = numberOfElements === 1 ? currentPage - 1 : currentPage;
             this.getUserInfo(page);
@@ -134,10 +137,12 @@ export class UserListContainer extends Component {
     this.setState({ currentPage: page });
     this.getUserInfo(page);
   };
+  
 
   render() {
     const { naudotojai } = this.state;
     let count = 0;
+    console.log(naudotojai)
 
     if (naudotojai !== undefined) count = naudotojai.length;
 

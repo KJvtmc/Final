@@ -19,9 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.akademija.application.Application;
-import it.akademija.application.ApplicationService;
-import it.akademija.document.DocumentDAO;
 import it.akademija.journal.JournalService;
 import it.akademija.role.Role;
 import it.akademija.user.passwordresetrequests.UserPasswordResetRequestsDAO;
@@ -33,8 +30,6 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserDAO userDao;
 
-	@Autowired
-	private ApplicationService applicationService;
 
 	@Autowired
 	private UserPasswordResetRequestsDAO userPasswordResetRequestsDAO;
@@ -42,8 +37,6 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private PasswordEncoder encoder;
 
-	@Autowired
-	DocumentDAO documentDao;
 
 	@Autowired
 	JournalService journalService;
@@ -145,17 +138,6 @@ public class UserService implements UserDetailsService {
 			userDao.save(new User(Role.ADMIN, "admin", "admin", "admin@admin.lt", "admin@admin.lt",
 					encoder.encode("admin@admin.lt")));
 
-		} else if (user.getRole().equals(Role.USER)) {
-
-			Set<Application> submittedApplications = user.getUserApplications();
-
-			for (Application application : submittedApplications) {
-
-				applicationService.detachAdditionalGuardian(application);
-				applicationService.updateAvailablePlacesInKindergarten(application);
-			}
-
-			documentDao.deleteByUploader(user);
 		}
 
 		expireSession(user);
@@ -319,19 +301,6 @@ public class UserService implements UserDetailsService {
 		return userDao.save(user);
 	}
 
-	/**
-	 *
-	 * Returns all applications of specified user.
-	 *
-	 * @param username
-	 * @return user's applications
-	 */
-
-	@Transactional(readOnly = true)
-	public Set<Application> getUserApplications(String currentUsername) {
-
-		return userDao.findByUsername(currentUsername).getUserApplications();
-	}
 
 	public UserDAO getUserDao() {
 		return userDao;
@@ -347,14 +316,6 @@ public class UserService implements UserDetailsService {
 
 	public void setEncoder(PasswordEncoder encoder) {
 		this.encoder = encoder;
-	}
-
-	public ApplicationService getApplicationService() {
-		return applicationService;
-	}
-
-	public void setApplicationService(ApplicationService applicationService) {
-		this.applicationService = applicationService;
 	}
 
 }

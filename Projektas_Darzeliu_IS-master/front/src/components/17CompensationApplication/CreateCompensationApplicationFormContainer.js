@@ -48,8 +48,6 @@ class CreateCompensationApplicationFormContainer extends Component {
             childName: "",
             childPersonalCode: "",
             childSurname: "",
-            childButtonText: "Surasti vaiką",
-            childCodeDisabled: false,
 
         };
         this.kindergartenOnChange = this.kindergartenOnChange.bind(this);
@@ -229,7 +227,6 @@ class CreateCompensationApplicationFormContainer extends Component {
                             name="childName"
                             placeholder="Vaiko vardas"
                             className="form-control"
-                            disabled={true}
                             value={this.state.childName}
                             onChange={this.childOnChange}
                             onInvalid={(e) => compensationInputValidator(e)}
@@ -250,7 +247,6 @@ class CreateCompensationApplicationFormContainer extends Component {
                             name="childSurname"
                             placeholder="Vaiko pavardė"
                             className="form-control"
-                            disabled={true}
                             value={this.state.childSurname}
                             onChange={this.childOnChange}
                             onInvalid={(e) => compensationInputValidator(e)}
@@ -272,22 +268,12 @@ class CreateCompensationApplicationFormContainer extends Component {
                             name="childPersonalCode"
                             placeholder="Asmens kodas"
                             className="form-control"
-                            disabled={this.state.childCodeDisabled}
                             value={this.state.childPersonalCode}
                             onChange={this.childOnChange}
                             onInvalid={(e) => compensationInputValidator(e)}
                             required
                             pattern="[0-9]{11}"
                         />
-                        </div>
-                        <div className="col">
-                            <button type="button" 
-                                disabled={this.state.registrationDisabled}
-                                className="btn btn-primary child--button" 
-                                onChange={this.childOnChange}
-                            
-                                onClick={() => this.getChildInfoFromHisPersonalCode(this.state.childPersonalCode)}>
-                                {this.state.childButtonText}</button>
                         </div>
                     </div>
                     {/** Gimimo data */}
@@ -302,7 +288,6 @@ class CreateCompensationApplicationFormContainer extends Component {
                             dateFormat="yyyy/MM/dd"
                             placeholderText="YYYY-MM-DD"
                             selected={this.state.birthdate}
-                            disabled={true}
                             onChange={(e) => {
                                 this.setState({ birthdate: e });
                             }}
@@ -513,13 +498,7 @@ class CreateCompensationApplicationFormContainer extends Component {
     /** Handle submit */
     submitHandle(e) {
         e.preventDefault();
-        if(!this.state.childCodeDisabled) {
-            swal({
-                icon: "error",
-                title: "Klaida!",
-                text: `Vaiko duomenys turi būti gauti iš sistemos.`,
-              });
-        } else {
+      
         const data = {
             birthdate: this.state.birthdate.toLocaleDateString("en-CA"),
             childName: this.state.childName,
@@ -544,76 +523,8 @@ class CreateCompensationApplicationFormContainer extends Component {
                 });
             });
     }
-    }
+    
 
-     /** Get child's main information by his personal code.
-   *  Additional check is made to check the validity of child's personal code. */
-  async getChildInfoFromHisPersonalCode(personalCode) {
-    if(!this.state.childCodeDisabled) {
-      var failed = false;    
-
-      if(/\D/.test(personalCode)) {
-        swal({
-          icon: "error",
-          title: "Netinkamo formato asmens kodas!",
-          text: `Asmens kodą sudaro 11 skaitmenų, jūsų asmens kodas turi neleistinų simbolių.`,
-        });
-      }
-      else if(personalCode.length !== 11) {
-        swal({
-          icon: "error",
-          title: "Netinkamo ilgio asmens kodas!",
-          text: `Asmens kodą sudaro 11 skaitmenų, jūs įvedėte ${personalCode.length}.`,
-        });
-      }
-      else {
-          async function getData(url = '', data = {}) {
-            const response = await fetch(url, {
-              method: 'GET',
-              mode: 'cors',
-              cache: 'no-cache',
-              credentials: 'same-origin',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              redirect: 'follow',
-              referrerPolicy: 'no-referrer',
-            });
-            if (response.status !== 200) {
-              failed = true;
-            }
-            return response.json();
-          }
-
-          getData(`https://darzelis.akademijait.vtmc.lt/registru-centras/vaikai/${personalCode}`, { asmensKodas: {personalCode} })
-              .then(response => {
-              if(failed) {
-                swal({
-                  icon: "error",
-                  title: `${response.details}!`,
-                  text: `Patikrinkite, ar teisingai įvedėte asmens kodą`,
-                })
-              } else {
-                this.setState((response) = ({
-                  childName: response.vardas,
-                  childSurname: response.pavarde,
-                  birthdate: parseISO(response.gimimoData),
-                  childButtonText: "Pakeisti",
-                  childCodeDisabled: true
-                }));
-              }
-               })              
-      }
-    } else {
-      this.setState({
-        childName: "",
-        childSurname: "",
-        birthdate: "",
-        childButtonText: "Surasti vaiką",
-        childCodeDisabled: false
-      })
-    }
-    }
 
     render() {
         return (

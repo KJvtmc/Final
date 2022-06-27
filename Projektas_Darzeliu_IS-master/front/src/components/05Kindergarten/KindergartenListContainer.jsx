@@ -56,11 +56,11 @@ export class KindergartenListContainer extends Component {
 
         if (page < 0 ) page = 0;
 
-        var uri = `${apiEndpoint}/api/darzeliai/manager/page?page=${page}&size=${pageSize}`;
+        var uri = `${apiEndpoint}/api/serviceProvider/manager/page?page=${page}&size=${pageSize}`;
 
         if (name !== "") {
             let encodedName = encodeURIComponent(name);
-            uri = `${apiEndpoint}/api/darzeliai/manager/page?page=${page}&size=${pageSize}&search=${encodedName}`;
+            uri = `${apiEndpoint}/api/serviceProvider/manager/page?page=${page}&size=${pageSize}&search=${encodedName}`;
 
         }
 
@@ -81,9 +81,11 @@ export class KindergartenListContainer extends Component {
 
     getElderates() {
         http
-            .get(`${apiEndpoint}/api/darzeliai/elderates`)
+            .get(`${apiEndpoint}/api/ServiceGroup/manager/groups`)
             .then((response) => {
+                console.log(response)
                 this.setState({ elderates: response.data });
+                console.log(this.state.elderates)
             })
             .catch(() => {});
     }
@@ -103,13 +105,13 @@ export class KindergartenListContainer extends Component {
             dangerMode: true,
         }).then((actionConfirmed) => {
             if (actionConfirmed) {
-                const id = item.id;
+                const id = item.code;
                 const { currentPage, numberOfElements } = this.state;
                 const page = numberOfElements === 1 ? (currentPage - 1) : currentPage;
                 //console.log("Trinti darzeli", id);
 
                 http
-                    .delete(`${apiEndpoint}/api/darzeliai/manager/delete/${id}`)
+                    .delete(`${apiEndpoint}/api/serviceProvider/manager/delete/${id}`)
                     .then((response) => {
                         swal({
                             text: response.data,
@@ -127,7 +129,7 @@ export class KindergartenListContainer extends Component {
 
         this.setState({
             inEditMode: true,
-            editRowId: item.id,
+            editRowId: item.code,
             editedKindergarten: item
         });
     }
@@ -163,7 +165,7 @@ export class KindergartenListContainer extends Component {
         const { editedKindergarten, editRowId, errorMessages } = this.state;
      
         if (Object.keys(errorMessages).length === 0) {
-            http.put(`${apiEndpoint}/api/darzeliai/manager/update/${editRowId}`, editedKindergarten)
+            http.put(`${apiEndpoint}/api/serviceProvider/manager/update/${editRowId}`, editedKindergarten)
                 .then(() => {
                     this.onCancel();
                     this.getKindergartenInfo(this.state.currentPage, this.state.searchQuery);

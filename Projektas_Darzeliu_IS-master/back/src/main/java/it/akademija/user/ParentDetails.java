@@ -16,7 +16,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import it.akademija.application.Application;
+//import it.akademija.application.Application;
 
 @Entity
 @Table(name = "parentDetails")
@@ -57,8 +57,8 @@ public class ParentDetails {
 	@Column
 	private String phone;
 
-	@OneToMany(mappedBy = "additionalGuardian", fetch = FetchType.LAZY)
-	private Set<Application> parentApplications;
+//	@OneToMany(mappedBy = "additionalGuardian", fetch = FetchType.LAZY)
+//	private Set<Application> parentApplications;
 
 	public ParentDetails() {
 
@@ -78,18 +78,18 @@ public class ParentDetails {
 		this.phone = phone;
 	}
 
-	public void setParentApplications(Set<Application> parentApplications) {
-		this.parentApplications = parentApplications;
-	}
-
-	public Set<Application> getParentApplications() {
-		return parentApplications;
-	}
-
-	public int removeApplication(Application application) {
-		parentApplications.remove(application);
-		return parentApplications.size();
-	}
+//	public void setParentApplications(Set<Application> parentApplications) {
+//		this.parentApplications = parentApplications;
+//	}
+//
+//	public Set<Application> getParentApplications() {
+//		return parentApplications;
+//	}
+//
+//	public int removeApplication(Application application) {
+//		parentApplications.remove(application);
+//		return parentApplications.size();
+//	}
 
 	public Long getParentDetailsId() {
 		return parentDetailsId;

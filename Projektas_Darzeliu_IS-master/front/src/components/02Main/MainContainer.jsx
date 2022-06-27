@@ -18,10 +18,6 @@ export const MainContainer = () => {
       <div className="mt-3">
         <Admin />
       </div>); 
-    case "MANAGER": return (
-      <div className="mt-3">
-        <KindergartenContainer />
-      </div>); 
     case "USER": return (
       <div className="mt-3">
         <h1>Pateiktų prašymų puslapis</h1>

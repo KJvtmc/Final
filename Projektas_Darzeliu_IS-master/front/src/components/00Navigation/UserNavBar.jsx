@@ -14,11 +14,7 @@ import LogoutContainer from './LogoutContainer';
 
 function Navigation(props) {
 
-    function handleRefreshForApplication(url) {
-        if (url === "/darzelis/prasymai/naujas_registracija") {
-            window.location.reload()
-        }
-    }
+
     function handleRefreshForCompensation(url) {
         if (url === "/darzelis/prasymai/naujas_kompensacija") {
             window.location.reload()
@@ -41,26 +37,12 @@ function Navigation(props) {
 
 
                          {/* Added dropdown to link different type of applications */}
-                            <li className="dropdown nav-item me-1">
-                                <button className=" btn btn-outline-light btn-sm  dropdown-toggle dropdown-button text-wrap px-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Sukurti prašymą
-                                </button>
-                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><NavLink className="nav-link dropdown-item" id="navUserNewApplicationEnter" onClick={() => handleRefreshForApplication(window.location.pathname)} to={"/prasymai/naujas_registracija"}>Registracijai į darželį</NavLink></li>
-                                    <li><NavLink className="nav-link dropdown-item" id="navUserNewApplicationGet" onClick={() => handleRefreshForCompensation(window.location.pathname)} to={"/prasymai/naujas_kompensacija"}>Gauti kompensaciją</NavLink></li>
-                                </ul>
+                            <li className="nav-item me-1">
+                            <NavLink className="nav-link" id="navUserNewApplicationGet"  to={"/paslaugos"}>Paslaugos</NavLink>   
                             </li>
 
                             <li className="nav-item me-1">
                                 <NavLink className="nav-link" id="navUserMyApplications" to={"/prasymai"}>Mano prašymai</NavLink>
-                            </li>
-
-                            <li className="nav-item me-1">
-                                <NavLink className="nav-link" id="navUserDocuments" to={"/pazymos"}>Mano pažymos</NavLink>
-                            </li>
-
-                            <li className="nav-item me-1">
-                                <NavLink className="nav-link" id="navUserApplicationStats" to={"/statistika"}>Prašymų statistika</NavLink>
                             </li>
 
                             <li className="nav-item me-1">

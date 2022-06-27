@@ -27,22 +27,30 @@ function Navigation(props) {
                             </li>
 
                             <li className="nav-item me-2">
-                                <NavLink className="nav-link" id="navAdminApplicationStats" to={"/statistika"}>Prašymų statistika</NavLink>
+                                <NavLink className="nav-link" id="navAdminProviders" to={"/tiekejai"}>Tiekėjai</NavLink>
+                            </li>
+
+                            <li className="nav-item me-2">
+                                <NavLink className="nav-link" id="navAdminGroups" to={"/grupes"}>Grupės</NavLink>
+                            </li>
+
+                            <li className="nav-item me-2">
+                                <NavLink className="nav-link" id="navAdminItems" to={"/produktai"}>Produktai</NavLink>
+                            </li>
+
+                            <li className="nav-item me-2">
+                                <NavLink className="nav-link" id="navAdminCompensationsList" to={"/prasymai"}>Prašymai</NavLink>
                             </li>
                             
                             <li className="nav-item me-2">
-                                <NavLink className="nav-link" id="navManagerApplicationAdmin" to={"/prasymai/statusas"}>Sąrašo redagavimas</NavLink>
-                            </li>                            
+                                <NavLink className="nav-link" id="navAdminMyAccount" to={"/profilis/atnaujinti"}>Mano paskyra</NavLink>
+                            </li>
 
                             <li className="nav-item me-2">
                                 <NavLink className="nav-link" id="navAdminEventLog" to={"/zurnalas"}>Įvykių žurnalas</NavLink>
                             </li>
 
-                            <li className="nav-item me-2">
-                                <NavLink className="nav-link" id="navAdminMyAccount" to={"/profilis/atnaujinti"}>Mano paskyra</NavLink>
-                            </li>
-
-                            <li className="nav-item nav-item me-2">
+                            <li className="nav-item nav-item me-2" id="navManagerLogout">
                                 <LogoutContainer />
                             </li>
 

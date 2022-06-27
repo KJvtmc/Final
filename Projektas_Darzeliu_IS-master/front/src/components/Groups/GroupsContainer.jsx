@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 
 import '../../App.css';
 
-import { KindergartenListContainer } from './KindergartenListContainer';
-import KindergartenInputForm from './KindergartenInputForm';
+import GroupsInputForm from './GroupsInputForm';
 
-export class KindergartenContainer extends Component {
+export class GroupsContainer extends Component {
 
     render() {
         return (
@@ -14,13 +13,13 @@ export class KindergartenContainer extends Component {
 
                     <div className="row ">
                         <div className="bg-light pb-3 col-12 col-sm-12 col-md-12 col-lg-3 pt-1">
-                            <KindergartenInputForm />
+                            <GroupsInputForm />
                         </div>
 
-                        <div className="col-12 col-sm-12 col-md-12 col-lg-9 pt-1">
-                            <h6 className="py-3"><b>Tiekėjai</b></h6>
+                        {/* <div className="col-12 col-sm-12 col-md-12 col-lg-9 pt-1">
+                            <h6 className="py-3"><b>Darželių sąrašas su laisvų vietų grupėse skaičiais</b></h6>
                             <KindergartenListContainer />
-                        </div>
+                        </div> */}
 
                     </div>
                 </div>
@@ -29,4 +28,4 @@ export class KindergartenContainer extends Component {
     }
 }
 
-export default KindergartenContainer;
+export default GroupsContainer;
