@@ -13,18 +13,14 @@ public class ServiceGroupDTO {
 
 	private String name;
 
-	private String description;
 	
-	private Collection<ServiceProvider> serviceProviders=new ArrayList<ServiceProvider>();
-
-	public Collection<ServiceItem> serviceItems=new ArrayList<ServiceItem>();
+	public Collection<ServiceProvider> books=new ArrayList<ServiceProvider>();
 
 
-	public ServiceGroupDTO(Long id, String name, String description) {
+	public ServiceGroupDTO(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.description = description;
 
 	}
 
@@ -33,10 +29,8 @@ public class ServiceGroupDTO {
 
 		this.id = serviceGroup.getId();
 		this.name = serviceGroup.getName();
-		this.description = serviceGroup.getDescription();
-		this.serviceProviders = serviceGroup.getServiceProviders();
-		this.serviceItems = serviceGroup.getServiceItems();
-		
+		this.books = serviceGroup.getBooks();
+
 	}
 
 	/**
@@ -56,7 +50,7 @@ public class ServiceGroupDTO {
 	 * @return
 	 */
 	public ServiceGroup toServiceGroup() {
-		return new ServiceGroup(id, name, description, serviceProviders, serviceItems);
+		return new ServiceGroup(id, name, books);
 	}
 
 	public Long getId() {
@@ -72,29 +66,18 @@ public class ServiceGroupDTO {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+	public Collection<ServiceProvider> getBooks() {
+		return books;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setBooks(Collection<ServiceProvider> books) {
+		this.books = books;
 	}
 
-	public Collection<ServiceProvider> getServiceProvider() {
-		return serviceProviders;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setServiceProvider(Collection<ServiceProvider> serviceProviders) {
-		this.serviceProviders = serviceProviders;
-	}
-
-	public Collection<ServiceItem> getServiceItems() {
-		return serviceItems;
-	}
-
-	public void setServiceItems(Collection<ServiceItem> serviceItems) {
-		this.serviceItems = serviceItems;
-	}
-
+	
 
 }

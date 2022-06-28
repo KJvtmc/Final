@@ -1,8 +1,6 @@
 package it.akademija.serviceGroup;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -23,25 +21,24 @@ public class ServiceGroupService {
 	private static final Logger LOG = LoggerFactory.getLogger(ServiceGroupService.class);
 	@Autowired
 	private ServiceGroupDAO gartenDao;
-	@Autowired
-	private OrderDAO applicationDao;
+//	@Autowired
+//	private OrderDAO applicationDao;
 
 	/**
 	 * Save new ServiceGroup to database, 
 	 * returns ServiceGroup unique ID
 	 *
-	 * @param ServiceGroupDTO
+	 * @param FavListDTO
 	 * @return ID
 	 */
 	@Transactional
-	public Long createNewServiceGroup(ServiceGroupDTO kindergarten) {
+	public Long createNewServiceGroup(ServiceGroupDTO group) {
 
 		ServiceGroup garten = new ServiceGroup( 
-				kindergarten.getId(),
-				kindergarten.getName(), 
-				kindergarten.getDescription(), 
-				kindergarten.getServiceProvider(),
-				kindergarten.getServiceItems()
+				group.getId(),
+				group.getName(), 
+				group.getBooks()
+
 				);
 		gartenDao.save(garten);
 		return garten.getId();
@@ -59,10 +56,10 @@ public class ServiceGroupService {
 
 	/**
 	 *
-	 * Returns a page of Kindergarten with specified page number and page size
+	 * Returns a page of group with specified page number and page size
 	 *
 	 * @param pageable
-	 * @return page from kindergarten database
+	 * @return page from group database
 	 */
 	@Transactional(readOnly = true)
 	public Page<ServiceGroupDTO> getServiceGroupPage(Pageable pageable, String search) {
@@ -83,14 +80,14 @@ public class ServiceGroupService {
 	@Transactional(readOnly = true)
 	public Page<ServiceGroupDTO> getServiceGroupPageByNameAndDescription(Pageable pageable, String search) {
 
-		return gartenDao.findByNameAndDescriptionContainingIgnoreCase(search, pageable).map(ServiceGroupDTO::from);
+		return gartenDao.findByNameContainingIgnoreCase(search, pageable).map(ServiceGroupDTO::from);
 	}
 
 	/**
-	 * Find kindergarten by id. Read only
+	 * Find group by id. Read only
 	 *
 	 * @param id
-	 * @return kindergarten or null if not found
+	 * @return group or null if not found
 	 */
 	@Transactional(readOnly = true)
 	public ServiceGroup findById(Long id) {
@@ -128,7 +125,7 @@ public class ServiceGroupService {
 	 * Update ServiceGroup
 	 *
 	 * @param currentInfo
-	 * @param ServiceGroup
+	 * @param FavList
 	 */
 	@Transactional
 	public void updateServiceGroup(Long id, ServiceGroupDTO updatedInfo) {
@@ -136,9 +133,7 @@ public class ServiceGroupService {
 		ServiceGroup current = gartenDao.findById(id).orElse(null);
 
 		current.setName(updatedInfo.getName());
-		current.setServiceProviders(updatedInfo.getServiceProvider());
-		current.setServiceItems(updatedInfo.getServiceItems());
-		current.setDescription(updatedInfo.getDescription());
+		current.setBooks(updatedInfo.getBooks());
 
 		gartenDao.save(current);
 	}

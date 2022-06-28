@@ -53,7 +53,7 @@ public class ServiceProviderController {
 	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@GetMapping("/manager/page")
 	@ApiOperation(value = "Get ServiceProvider information pages")
-	public ResponseEntity<Page<ServiceProviderDTO>> getKindergartenPage(
+	public ResponseEntity<Page<ServiceProviderDTO>> getBookPage(
 
 			@RequestParam("page") int page, @RequestParam("size") int size,
 			@RequestParam(value = "search", required = false) String search) {
@@ -69,13 +69,13 @@ public class ServiceProviderController {
 				decodedName = decodedName.replaceAll("%", "%75[%]%");
 				decodedName = decodedName.replaceAll("_", "[_]");
 
-				return new ResponseEntity<>(service.getKindergartenPage(pageable, decodedName),
+				return new ResponseEntity<>(service.getBookPage(pageable, decodedName),
 						HttpStatus.OK);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 		}
-		return new ResponseEntity<>(service.getKindergartenPage(pageable, null), HttpStatus.OK);
+		return new ResponseEntity<>(service.getBookPage(pageable, null), HttpStatus.OK);
 
 	}
 
@@ -103,13 +103,13 @@ public class ServiceProviderController {
 				decodedSearch = decodedSearch.replaceAll("%", "%75[%]%");
 				decodedSearch = decodedSearch.replaceAll("_", "[_]");
 
-				return new ResponseEntity<>(service.getKindergartenPageByNameAndAddress(pageable, decodedSearch),
+				return new ResponseEntity<>(service.getBookPageByNameAndAddress(pageable, decodedSearch),
 						HttpStatus.OK);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 		
-		return new ResponseEntity<>(service.getKindergartenPage(pageable, null), HttpStatus.OK);
+		return new ResponseEntity<>(service.getBookPage(pageable, null), HttpStatus.OK);
 
 	}
 
@@ -137,9 +137,9 @@ public class ServiceProviderController {
 
 		else {
 
-			service.createNewPrivateKindergarten(serviceProvider);
+			service.createNewBook(serviceProvider);
 
-			LOG.info("**KindergartenController: kuriamas darzelis pavadinimu [{}] **", serviceProvider.getName());
+			LOG.info("**BookController: kuriamas darzelis pavadinimu [{}] **", serviceProvider.getName());
 
 			journalService.newJournalEntry(OperationType.KINDERGARTEN_CREATED, Long.parseLong(id),
 					ObjectType.KINDERGARTEN, "Sukurtas naujas darželis");
@@ -151,28 +151,28 @@ public class ServiceProviderController {
 
 	/**
 	 *
-	 * Delete kindergarten entity with specified id
+	 * Delete Book entity with specified id
 	 *
 	 * @param id
 	 * @return message if entity was deleted or if it does not exist in the database
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping("/manager/delete/{id}")
-	@ApiOperation(value = "Delete kindergarten by ID")
-	public ResponseEntity<String> deleteKindergarten(
-			@ApiParam(value = "Kindergarten id", required = true) @PathVariable String id) {
+	@ApiOperation(value = "Delete Book by ID")
+	public ResponseEntity<String> deleteBook(
+			@ApiParam(value = "Book id", required = true) @PathVariable String id) {
 
 		journalService.newJournalEntry(OperationType.KINDERGARTEN_DELETED, Long.parseLong(id), ObjectType.KINDERGARTEN,
 				"Ištrintas tiekėjas");
 
-		return service.deleteKindergarten(id);
+		return service.deleteBook(id);
 	}
 
 	@Secured({ "ROLE_ADMIN" })
 	@PutMapping("/manager/update/{id}")
-	@ApiOperation(value = "Update kindergarten by ID")
-	public ResponseEntity<String> updateKindergarten(
-			@ApiParam(value = "Kindergarten", required = true) @Valid @RequestBody ServiceProviderDTO updated,
+	@ApiOperation(value = "Update Book by ID")
+	public ResponseEntity<String> updateBook(
+			@ApiParam(value = "Book", required = true) @Valid @RequestBody ServiceProviderDTO updated,
 			@PathVariable String id) {
 
 		if (service.findById(id) == null) {
@@ -191,7 +191,7 @@ public class ServiceProviderController {
 //		} 
 		else {
 
-			service.updateKindergarten(id, updated);
+			service.updateBook(id, updated);
 
 			LOG.info("** Usercontroller: atnaujinamas tiekėjas ID [{}] **", id);
 

@@ -1,5 +1,7 @@
 package it.akademija.user;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.akademija.order.OrderEntity;
 import it.akademija.role.Role;
+import it.akademija.serviceProvider.ServiceProvider;
 
 @Entity
 @Table(name = "users")
@@ -81,6 +85,10 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy = "mainGuardian", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	private Set<OrderEntity> userCompensationApplications;
+	
+	@JsonIgnore
+	@ManyToMany
+	private Collection<ServiceProvider> booklist =  new ArrayList<ServiceProvider>();
 
 	public User() {
 	}

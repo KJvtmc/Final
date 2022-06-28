@@ -2,22 +2,21 @@ package it.akademija.serviceGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
-import it.akademija.serviceItem.ServiceItem;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import it.akademija.serviceProvider.ServiceProvider;
 
 @Entity
@@ -32,40 +31,30 @@ public class ServiceGroup {
 	@Column
 	private String name;
 
-	@Column
-	@NotBlank(message = "Aprašymas privalomas")
-	private String description;
-	
-	@ManyToMany
-	private Collection<ServiceProvider> serviceProviders=new ArrayList<ServiceProvider>();
-	
-	@ManyToMany
-	public Collection<ServiceItem> serviceItems=new ArrayList<ServiceItem>();
+	@JsonIgnore
+	@OneToMany(mappedBy = "serviceGroup", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+	public Collection<ServiceProvider> books=new ArrayList<ServiceProvider>();
 
 
 	public ServiceGroup() {
 
 	}
 
-	public ServiceGroup(Long id, @NotBlank(message = "Pavadinimas privalomas") String name,
-			@NotBlank(message = "Aprašymas privalomas") String description) {
+	public ServiceGroup(Long id, @NotBlank(message = "Pavadinimas privalomas") String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.description = description;
 
 	}
 
 	public ServiceGroup(Long id, @NotBlank(message = "Pavadinimas privalomas") String name,
-			@NotBlank(message = "Aprašymas privalomas") String description, Collection<ServiceProvider> serviceProviders,
-			Collection<ServiceItem> serviceItems) {
+			Collection<ServiceProvider> books) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.description = description;
-		this.serviceProviders = serviceProviders;
-		this.serviceItems = serviceItems;
+		this.books = books;
 	}
+
 
 
 	public Long getId() {
@@ -84,32 +73,13 @@ public class ServiceGroup {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+	public Collection<ServiceProvider> getBooks() {
+		return books;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setBooks(Collection<ServiceProvider> books) {
+		this.books = books;
 	}
-
-
-	public Collection<ServiceProvider> getServiceProviders() {
-		return serviceProviders;
-	}
-
-
-	public void setServiceProviders(Collection<ServiceProvider> serviceProviders) {
-		this.serviceProviders = serviceProviders;
-	}
-
-	public Collection<ServiceItem> getServiceItems() {
-		return serviceItems;
-	}
-
-	public void setServiceItems(Collection<ServiceItem> serviceItems) {
-		this.serviceItems = serviceItems;
-	}
-
 
 
 

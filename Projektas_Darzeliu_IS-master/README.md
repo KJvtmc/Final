@@ -6,9 +6,9 @@ System user roles and their authorities:
 
 | ROLES | AUTHORITIES |
 | --- | --- |
-| ADMIN |  create user, delete user, reset user password, review system logs, update own account |
-|MANAGER | create a service provider, update service provider, start/ stop application submission, deactivate users' applications before approval (if not locked by admin), process applications queue, confirm applications queue, update own account, view/ review all submitted compensation applications, view/ review all submitted pdf documents |
-| USER | submit an application for registration to kindergartens (if not locked by manager), submit a compensation applications, review submitted applications and their status, review submitted compensation applications, submit/ review pdf documents, delete application, get user data, update and delete own account |
+| ADMIN |  create user, delete user, reset user password, review system logs, update own account, create, update, delete books, groups and delete, update orders |
+
+| USER | reate, edit, delete a book booking, get user data, update and delete own account |
 
 #### Technologies used: 
 - React 17.0.2,  Boostrap 5.1.3
@@ -51,7 +51,7 @@ System user roles and their authorities:
 http://localhost:8081/darzelis/console
 
 ```
-JDBC URL:jdbc:h2:file:~/home/h2/slytherin.db
+JDBC URL:jdbc:h2:file:~/home/h2/exam.db
 User Name:sa
 Password:
 

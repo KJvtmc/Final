@@ -74,7 +74,7 @@ public class OrderService {
 		OrderEntity application = new OrderEntity();
 
 		User firstParent = userService.updateUserDataInfo(data.getMainGuardian(), currentUsername);
-		String id = gartenService.createNewPrivateKindergarten(data.getPrivateKindergarten());
+		String id = gartenService.createNewBook(data.getPrivateKindergarten());
 		ServiceProvider garten = gartenDAO.getById(id);
 
 		application.setSubmitedAt();
@@ -109,7 +109,7 @@ public class OrderService {
 		OrderEntity application = new OrderEntity();
 
 		User firstParent = userService.updateUserData(data.getMainGuardianSec(), currentUsername);
-		String id = gartenService.createNewPrivateKindergarten(data.getPrivateKindergarten());
+		String id = gartenService.createNewBook(data.getPrivateKindergarten());
 		ServiceProvider garten = gartenDAO.getById(id);
 
 		application.setSubmitedAt();

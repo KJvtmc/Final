@@ -1,48 +1,56 @@
 package it.akademija.serviceProvider;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
+import it.akademija.order.OrderEntity;
 import it.akademija.serviceGroup.ServiceGroup;
 
 public class ServiceProviderDTO {
 
 	
-	private String code;
+	//isbn
 
-	private String name;
+		private String code;
 
-	private String address;
+		private String name;
 
-	private String phone;
+		private String description;
 
-	private String email;
+		private String pages;
+
+		private String image;
+//kategorija
+		public ServiceGroup serviceGroup;
+
+		public OrderEntity order;
+
 	
-	public Collection<ServiceGroup> serviceGroups=new ArrayList<ServiceGroup>();
-	
 
 
-	public ServiceProviderDTO(String code, String name, String address,
-			String phone, String email, Collection<ServiceGroup> serviceGroups) {
+
+
+	public ServiceProviderDTO(String code, String name, String description, String pages, String image,
+		ServiceGroup serviceGroup, OrderEntity order) {
+	super();
+	this.code = code;
+	this.name = name;
+	this.description = description;
+	this.pages = pages;
+	this.image = image;
+	this.serviceGroup = serviceGroup;
+	this.order = order;
+
+}
+
+	public ServiceProviderDTO(ServiceProvider book) {
 		super();
-		this.code = code;
-		this.name = name;
-		this.address = address;
-		this.phone = phone;
-		this.email = email;
-		this.serviceGroups = serviceGroups;
 
-	}
+		this.code = book.getCode();
+		this.name = book.getName();
+		this.description = book.getDescription();
+		this.pages = book.getPages();
+		this.image = book.getImage();
+		this.serviceGroup = book.getServiceGroup();
+		this.order = book.getOrder();
 
-	public ServiceProviderDTO(ServiceProvider privateKindergarten) {
-		super();
-
-		this.code = privateKindergarten.getCode();
-		this.name = privateKindergarten.getName();
-		this.address = privateKindergarten.getAddress();
-		this.phone = privateKindergarten.getPhone();
-		this.email = privateKindergarten.getEmail();
-		this.serviceGroups = privateKindergarten.getServiceGroups();
 	}
 
 	/**
@@ -62,8 +70,8 @@ public class ServiceProviderDTO {
 	 * @return
 	 */
 	public ServiceProvider toPrivateKindergarten() {
-		return new ServiceProvider(code, name, address, phone,
-				email, serviceGroups);
+		return new ServiceProvider(code, name, description, pages,
+				image,serviceGroup, order );
 	}
 
 	public String getCode() {
@@ -82,39 +90,47 @@ public class ServiceProviderDTO {
 		this.name = name;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getPages() {
+		return pages;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setPages(String pages) {
+		this.pages = pages;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getImage() {
+		return image;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setImage(String image) {
+		this.image = image;
 	}
 
-	public Collection<ServiceGroup> getServiceGroups() {
-		return serviceGroups;
+	public ServiceGroup getServiceGroup() {
+		return serviceGroup;
 	}
 
-	public void setServiceGroups(Collection<ServiceGroup> serviceGroups) {
-		this.serviceGroups = serviceGroups;
+	public void setServiceGroup(ServiceGroup serviceGroup) {
+		this.serviceGroup = serviceGroup;
+	}
+
+	public OrderEntity getOrder() {
+		return order;
+	}
+
+	public void setOrder(OrderEntity order) {
+		this.order = order;
 	}
 
 
-
+	
 
 }

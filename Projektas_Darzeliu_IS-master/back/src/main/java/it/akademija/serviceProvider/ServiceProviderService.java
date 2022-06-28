@@ -17,94 +17,97 @@ public class ServiceProviderService {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(ServiceProviderService.class);
 	@Autowired
-	private ServiceProviderDAO gartenDao;
+	private ServiceProviderDAO bookDao;
 //	@Autowired
 //	private OrderDAO applicationDao;
 
 	/**
-	 * Save new kindergarten to database, 
-	 * returns PrivateKindergartens unique ID
+	 * Save new book to database, 
+	 * returns book unique ID
 	 *
-	 * @param kindergarten
+	 * @param book
 	 * @return ID
 	 */
 	@Transactional
-	public String createNewPrivateKindergarten(ServiceProviderDTO kindergarten) {
+	public String createNewBook(ServiceProviderDTO book) {
 
-		ServiceProvider garten = new ServiceProvider( 
-				kindergarten.getCode(), 
-				kindergarten.getName(), 
-				kindergarten.getAddress(),
-				kindergarten.getPhone(), 
-				kindergarten.getEmail());
-		gartenDao.save(garten);
-		return garten.getCode();
+		ServiceProvider bookNew = new ServiceProvider( 
+				book.getCode(), 
+				book.getName(), 
+				book.getDescription(),
+				book.getPages(), 
+				book.getImage());
+		
+		bookDao.save(bookNew);
+		return bookNew.getCode();
 	}
 
 
 	public ServiceProviderDAO getGartenDao() {
-		return gartenDao;
+		return bookDao;
 	}
 
 
 	public void setGartenDao(ServiceProviderDAO gartenDao) {
-		this.gartenDao = gartenDao;
+		this.bookDao = gartenDao;
 	}
-
+	
+	
+//////////////////////////////////
 	/**
 	 *
-	 * Returns a page of Kindergarten with specified page number and page size
+	 * Returns a page of book with specified page number and page size
 	 *
 	 * @param pageable
-	 * @return page from kindergarten database
+	 * @return page from book database
 	 */
 	@Transactional(readOnly = true)
-	public Page<ServiceProviderDTO> getKindergartenPage(Pageable pageable, String search) {
+	public Page<ServiceProviderDTO> getBookPage(Pageable pageable, String search) {
 		if (search == null) {
-			return gartenDao.findAllKindergarten(pageable).map(ServiceProviderDTO::from);
+			return bookDao.findAllBooks(pageable).map(ServiceProviderDTO::from);
 		}
-		return gartenDao.findByNameContainingIgnoreCase(search, pageable).map(ServiceProviderDTO::from);
+		return bookDao.findByNameContainingIgnoreCase(search, pageable).map(ServiceProviderDTO::from);
 	}
 	
 	/**
 	 *
-	 * Returns a page of Kindergarten with specified page number and page size that
+	 * Returns a page of Book with specified page number and page size that
 	 * matches the search query of name and address
 	 * 
 	 * @param pageable, search
-	 * @return page from kindergarten database
+	 * @return page from Book database
 	 */
 	@Transactional(readOnly = true)
-	public Page<ServiceProviderDTO> getKindergartenPageByNameAndAddress(Pageable pageable, String search) {
+	public Page<ServiceProviderDTO> getBookPageByNameAndAddress(Pageable pageable, String search) {
 
-		return gartenDao.findByNameAndAddressContainingIgnoreCase(search, pageable).map(ServiceProviderDTO::from);
+		return bookDao.findByNameAndDescriptionContainingIgnoreCase(search, pageable).map(ServiceProviderDTO::from);
 	}
 
 	/**
-	 * Find kindergarten by id. Read only
+	 * Find Book by id. Read only
 	 *
 	 * @param id
-	 * @return kindergarten or null if not found
+	 * @return Book or null if not found
 	 */
 	@Transactional(readOnly = true)
 	public ServiceProvider findById(String id) {
 
-		return gartenDao.findById(id).orElse(null);
+		return bookDao.findById(id).orElse(null);
 	}
 	
 	
 //	/**
-//	 * Find kindergarten by name. Read only
+//	 * Find Book by name. Read only
 //	 *
 //	 * @param name
-//	 * @return kindergarten or null if not found
+//	 * @return Book or null if not found
 //	 */
 //	@Transactional(readOnly = true)
 //	public boolean nameAlreadyExists(String name, String id) {
 //
-//		PrivateKindergarten kindergarten = gartenDao.findByName(name);
+//		PrivateBook Book = gartenDao.findByName(name);
 //
-//		if (kindergarten != null && kindergarten.getId() != id) {
+//		if (Book != null && Book.getId() != id) {
 //			return true;
 //		}
 //		return false;
@@ -112,19 +115,19 @@ public class ServiceProviderService {
 	
 	/**
 	 *
-	 * Delete kindergarten with specified id. Also deletes all related kindergarten
+	 * Delete Book with specified id. Also deletes all related Book
 	 * choises
 	 *
 	 * @param id
 	 */
 	@Transactional
-	public ResponseEntity<String> deleteKindergarten(String id) {
+	public ResponseEntity<String> deleteBook(String id) {
 
-		ServiceProvider garten = gartenDao.findById(id).orElse(null);
+		ServiceProvider garten = bookDao.findById(id).orElse(null);
 
 		if (garten != null) {
 
-			gartenDao.deleteById(id);
+			bookDao.deleteById(id);
 
 			LOG.info("** UserService: trinamas darželis ID [{}] **", id);
 
@@ -137,23 +140,22 @@ public class ServiceProviderService {
 	}
 
 	/**
-	 * Update kindergarten
+	 * Update Book
 	 *
 	 * @param currentInfo
-	 * @param kindergarten
+	 * @param Book
 	 */
 	@Transactional
-	public void updateKindergarten(String id, ServiceProviderDTO updatedInfo) {
+	public void updateBook(String id, ServiceProviderDTO updatedInfo) {
 
-		ServiceProvider current = gartenDao.findById(id).orElse(null);
+		ServiceProvider current = bookDao.findById(id).orElse(null);
 
 		current.setName(updatedInfo.getName());
-		current.setAddress(updatedInfo.getAddress());
-		current.setCode(updatedInfo.getCode());
-		current.setServiceGroups(updatedInfo.getServiceGroups());
-		current.setEmail(updatedInfo.getEmail());
-		current.setPhone(updatedInfo.getPhone());
-
-		gartenDao.save(current);
+		current.setDescription(updatedInfo.getDescription());
+		current.setPages(updatedInfo.getPages());
+		current.setImage(updatedInfo.getImage());
+		current.setServiceGroup(updatedInfo.getServiceGroup());
+		current.setOrder(updatedInfo.getOrder());
+		bookDao.save(current);
 	}
 }

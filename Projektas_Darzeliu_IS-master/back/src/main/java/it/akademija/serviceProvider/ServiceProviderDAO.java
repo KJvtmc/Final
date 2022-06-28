@@ -8,13 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 
 
 public interface ServiceProviderDAO extends JpaRepository<ServiceProvider, String>{
-	@Query("SELECT new ServiceProvider( k.code , k.name, k.address, k.phone, k.email) FROM ServiceProvider k")
-	Page<ServiceProvider> findAllKindergarten(Pageable pageable);
+	@Query("SELECT new ServiceProvider( k.code , k.name, k.description, k.pages, k.image) FROM ServiceProvider k")
+	Page<ServiceProvider> findAllBooks(Pageable pageable);
 
-	@Query("SELECT new ServiceProvider(  k.code , k.name, k.address, k.phone, k.email) FROM ServiceProvider k WHERE LOWER(k.name) LIKE LOWER(concat('%', ?1,'%'))")
+	@Query("SELECT new ServiceProvider(  k.code , k.name, k.description, k.pages, k.image) FROM ServiceProvider k WHERE LOWER(k.name) LIKE LOWER(concat('%', ?1,'%'))")
 	Page<ServiceProvider> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
-	@Query("SELECT new ServiceProvider( k.code , k.name, k.address, k.phone, k.email) FROM ServiceProvider k WHERE LOWER(k.name||' '||k.address) LIKE LOWER(concat('%', ?1,'%'))")
-	Page<ServiceProvider> findByNameAndAddressContainingIgnoreCase(String name, Pageable pageable);
+	@Query("SELECT new ServiceProvider( k.code , k.name, k.description, k.pages, k.image) FROM ServiceProvider k WHERE LOWER(k.name||' '||k.description) LIKE LOWER(concat('%', ?1,'%'))")
+	Page<ServiceProvider> findByNameAndDescriptionContainingIgnoreCase(String name, Pageable pageable);
 
 }
