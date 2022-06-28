@@ -1,5 +1,7 @@
 package it.akademija.user;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -8,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -15,6 +18,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import it.akademija.serviceProvider.ServiceProvider;
 
 //import it.akademija.application.Application;
 
@@ -57,9 +64,9 @@ public class ParentDetails {
 	@Column
 	private String phone;
 
-//	@OneToMany(mappedBy = "additionalGuardian", fetch = FetchType.LAZY)
-//	private Set<Application> parentApplications;
-
+	@JsonIgnore
+	@ManyToMany
+	private Collection<ServiceProvider> booklist =  new ArrayList<ServiceProvider>();
 	public ParentDetails() {
 
 	}
@@ -90,9 +97,22 @@ public class ParentDetails {
 //		parentApplications.remove(application);
 //		return parentApplications.size();
 //	}
+	
 
 	public Long getParentDetailsId() {
 		return parentDetailsId;
+	}
+
+	public Collection<ServiceProvider> getBooklist() {
+		return booklist;
+	}
+
+	public void setBooklist(Collection<ServiceProvider> booklist) {
+		this.booklist = booklist;
+	}
+
+	public void setParentDetailsId(Long parentDetailsId) {
+		this.parentDetailsId = parentDetailsId;
 	}
 
 	public String getPersonalCode() {

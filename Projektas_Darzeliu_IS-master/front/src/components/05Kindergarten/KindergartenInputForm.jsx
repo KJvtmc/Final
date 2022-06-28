@@ -13,7 +13,7 @@ function KindergartenInputForm() {
     description: "",
     pages: "",
     image: "",
-    serviceGroup:{}
+
   };
 
   var [selectedGroup, setSelectedGroup] = useState();
@@ -123,22 +123,22 @@ function KindergartenInputForm() {
   // </li>)
   
   // }
-  useEffect(() => {
-    addGroup()
-  }, [selectedGroup])
+  // useEffect(() => {
+  //   addGroup()
+  // }, [selectedGroup])
 
-  function addGroup () {
-    console.log("addGroup")
-    let group = groups.find(g=>g.name === selectedGroup)
-    if (group){
-    let groupsNew  =[...data.serviceGroup]
-    groupsNew.push(group)
-    setData({
-      ...data,
-      serviceGroup: [...groupsNew],
-    });
-    }
-  }
+  // function addGroup () {
+  //   console.log("addGroup")
+  //   let group = groups.find(g=>g.name === selectedGroup)
+  //   if (group){
+  //   let groupsNew  =[...data.serviceGroup]
+  //   groupsNew.push(group)
+  //   setData({
+  //     ...data,
+  //     serviceGroup: [...groupsNew],
+  //   });
+  //   }
+  // }
 
   const removeGroup = (e, name) =>{
     e.preventDefault()

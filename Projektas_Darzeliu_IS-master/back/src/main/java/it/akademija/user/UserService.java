@@ -109,6 +109,7 @@ public class UserService implements UserDetailsService {
 			details.setPhone(userData.getPhone());
 			details.setEmail(userData.getEmail());
 			details.setName(userData.getName());
+			details.setBooklist(userData.getBooklist());
 			details.setSurname(userData.getSurname());
 		}
 		user.setPhone(userData.getPhone());

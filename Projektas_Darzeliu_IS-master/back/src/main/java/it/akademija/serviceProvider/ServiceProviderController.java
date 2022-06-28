@@ -33,7 +33,7 @@ import it.akademija.journal.ObjectType;
 import it.akademija.journal.OperationType;
 
 @RestController
-@Api(value = "ServiceProvider")
+@Api(value = "Book")
 @RequestMapping(path = "/api/serviceProvider")
 public class ServiceProviderController {
 

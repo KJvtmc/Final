@@ -5,7 +5,7 @@ Aplication functionality is based on exam assignment.
 System user roles and their authorities:
 
 | ROLES | AUTHORITIES |
-| --- | --- |
+| --- | --- | --- |
 | ADMIN |  create user, delete user, reset user password, review system logs, update own account, create, update, delete books, groups and delete, update orders |
 
 | USER | reate, edit, delete a book booking, get user data, update and delete own account |

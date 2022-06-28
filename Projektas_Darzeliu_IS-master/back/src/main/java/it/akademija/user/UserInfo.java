@@ -1,6 +1,10 @@
 package it.akademija.user;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import it.akademija.role.Role;
+import it.akademija.serviceProvider.ServiceProvider;
 
 public class UserInfo {
 
@@ -12,7 +16,7 @@ public class UserInfo {
 	private String phone;
 	private String email;
 	private String username;
-
+	private Collection<ServiceProvider> booklist =  new ArrayList<ServiceProvider>();
 	public UserInfo() {
 
 	}
@@ -54,6 +58,7 @@ public class UserInfo {
 		this.phone = user.getPhone();
 		this.email = user.getEmail();
 		this.username = user.getUsername();
+		this.booklist = user.getBooklist();
 	}
 
 	/**
@@ -73,6 +78,14 @@ public class UserInfo {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public Collection<ServiceProvider> getBooklist() {
+		return booklist;
+	}
+
+	public void setBooklist(Collection<ServiceProvider> booklist) {
+		this.booklist = booklist;
 	}
 
 	public String getName() {

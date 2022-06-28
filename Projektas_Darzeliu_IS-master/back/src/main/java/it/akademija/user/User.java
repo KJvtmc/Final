@@ -129,6 +129,14 @@ public class User {
 	}
 
 
+	public Collection<ServiceProvider> getBooklist() {
+		return booklist;
+	}
+
+	public void setBooklist(Collection<ServiceProvider> booklist) {
+		this.booklist = booklist;
+	}
+
 	public Set<OrderEntity> getUserCompensationApplications() {
 		return userCompensationApplications;
 	}
