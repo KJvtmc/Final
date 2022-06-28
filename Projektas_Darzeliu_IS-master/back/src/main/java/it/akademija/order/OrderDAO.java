@@ -12,10 +12,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public interface OrderDAO extends JpaRepository<OrderEntity, Long> {
 
-	boolean existsCompensationApplicationByChildPersonalCode(String childPersonalCode);
+//	boolean existsCompensationApplicationByChildPersonalCode(String childPersonalCode);
 
-	@Query("SELECT new it.akademija.order.OrderInfoUser(a.id, a.childName, a.childSurname, a.submitedAt, a.serviceProvider.name, a.serviceProvider.code, a.status) FROM OrderEntity a WHERE a.mainGuardian.username=?1")
-	Set<OrderInfoUser> findAllUserCompensationApplications(String currentUsername);
+	@Query("SELECT new it.akademija.order.OrderInfoUser(a.id, a.submitedAt, a.serviceProvider.name, a.serviceProvider.code, a.status) FROM OrderEntity a WHERE a.mainGuardian.username=?1")
+	Set<OrderInfoUser> findAllUserOders(String currentUsername);
 
 	@Query("SELECT c FROM OrderEntity c ORDER BY c.id DESC")
 	Page<OrderEntity> orderdByDocumentId(Pageable pageable);

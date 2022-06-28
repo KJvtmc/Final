@@ -7,15 +7,11 @@ public class OrderInfoUser {
 
 	private Long id;
 
-	private String childName;
-
-	private String childSurname;
-
 	private LocalDate submitedAt;
 
-	private String kindergartenName;
+	private String bookName;
 
-	private String kindergartenCode;
+	private String bookCode;
 	
 	private boolean status;
 
@@ -23,15 +19,13 @@ public class OrderInfoUser {
 
 	}
 
-	public OrderInfoUser(Long id, String childName, String childSurname, LocalDate submitedAt,
+	public OrderInfoUser(Long id, LocalDate submitedAt,
 			String kindergartenName, String kindergartenCode, boolean status) {
 		super();
 		this.id = id;
-		this.childName = childName;
-		this.childSurname = childSurname;
 		this.submitedAt = submitedAt;
-		this.kindergartenName = kindergartenName;
-		this.kindergartenCode = kindergartenCode;
+		this.bookName = kindergartenName;
+		this.bookCode = kindergartenCode;
 		this.status = status;
 	}
 
@@ -43,21 +37,7 @@ public class OrderInfoUser {
 		this.id = id;
 	}
 
-	public String getChildName() {
-		return childName;
-	}
-
-	public void setChildName(String childName) {
-		this.childName = childName;
-	}
-
-	public String getChildSurname() {
-		return childSurname;
-	}
-
-	public void setChildSurname(String childSurname) {
-		this.childSurname = childSurname;
-	}
+	
 
 	public LocalDate getSubmitedAt() {
 		return submitedAt;
@@ -68,19 +48,19 @@ public class OrderInfoUser {
 	}
 
 	public String getKindergartenName() {
-		return kindergartenName;
+		return bookName;
 	}
 
 	public void setKindergartenName(String kindergartenName) {
-		this.kindergartenName = kindergartenName;
+		this.bookName = kindergartenName;
 	}
 
 	public String getKindergartenAccountNumber() {
-		return kindergartenCode;
+		return bookCode;
 	}
 
 	public void setKindergartenAccountNumber(String kindergartenAccountNumber) {
-		this.kindergartenCode = kindergartenAccountNumber;
+		this.bookCode = kindergartenAccountNumber;
 	}
 
 	public boolean isStatus() {

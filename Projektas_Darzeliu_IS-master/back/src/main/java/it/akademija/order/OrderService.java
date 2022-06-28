@@ -53,7 +53,7 @@ public class OrderService {
 	@Transactional(readOnly = true)
 	public Set<OrderInfoUser> getAllUserCompensationApplications(String currentUsername) {
 
-		return applicationDao.findAllUserCompensationApplications(currentUsername);
+		return applicationDao.findAllUserOders(currentUsername);
 	}
 
 	/**
@@ -75,15 +75,11 @@ public class OrderService {
 
 		User firstParent = userService.updateUserDataInfo(data.getMainGuardian(), currentUsername);
 		String id = gartenService.createNewBook(data.getPrivateKindergarten());
-		ServiceProvider garten = gartenDAO.getById(id);
+		ServiceProvider book = gartenDAO.getById(id);
 
 		application.setSubmitedAt();
-		application.setChildName(capitalize(data.getChildName()));
-		application.setChildSurname(capitalize(data.getChildSurname()));
-		application.setChildPersonalCode(data.getChildPersonalCode());
-		application.setBirthdate(data.getBirthdate());
 		application.setMainGuardian(firstParent);
-		application.setPrivateKindergarten(garten);
+		application.setServiceProvider(book);
 		application.setStatus(false);
 		application = applicationDao.saveAndFlush(application);
 
@@ -108,17 +104,13 @@ public class OrderService {
 
 		OrderEntity application = new OrderEntity();
 
-		User firstParent = userService.updateUserData(data.getMainGuardianSec(), currentUsername);
+		User firstParent = userService.updateUserDataInfo(data.getMainGuardian(), currentUsername);
 		String id = gartenService.createNewBook(data.getPrivateKindergarten());
 		ServiceProvider garten = gartenDAO.getById(id);
 
 		application.setSubmitedAt();
-		application.setChildName(capitalize(data.getChildName()));
-		application.setChildSurname(capitalize(data.getChildSurname()));
-		application.setChildPersonalCode(data.getChildPersonalCode());
-		application.setBirthdate(data.getBirthdate());
 		application.setMainGuardian(firstParent);
-		application.setPrivateKindergarten(garten);
+		application.setServiceProvider(garten);
 		application.setStatus(false);
 		application = applicationDao.saveAndFlush(application);
 
@@ -210,10 +202,6 @@ public class OrderService {
 		if (application != null ) {
 
 			application.setSubmitedAt();
-			application.setChildName(capitalize(data.getChildName()));
-			application.setChildSurname(capitalize(data.getChildSurname()));
-			application.setChildPersonalCode(data.getChildPersonalCode());
-			application.setBirthdate(data.getBirthdate());
 			application.setStatus(data.isStatus());
 			application = applicationDao.saveAndFlush(application);
 			

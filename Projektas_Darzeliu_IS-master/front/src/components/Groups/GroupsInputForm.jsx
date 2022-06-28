@@ -7,7 +7,6 @@ import swal from "sweetalert";
 
 function GroupsInputForm() {
   const initKindergartenData = {
-    description: "",
     id: 0,
     name: "",
     serviceItems:[],
@@ -166,7 +165,7 @@ function GroupsInputForm() {
           />
         </div>
 
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label htmlFor="description" className="form-label">
             Aprašymas <span className="fieldRequired">*</span>
           </label>
@@ -185,7 +184,7 @@ function GroupsInputForm() {
             title="Įveskite darželio aprašymą"
             // pattern="[^\n]{3,50}"
           />
-        </div>
+        </div> */}
 
         {/* <div className="mb-3">
           <label htmlFor="elderate" className="form-label">

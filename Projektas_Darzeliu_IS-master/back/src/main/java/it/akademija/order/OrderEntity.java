@@ -34,31 +34,13 @@ public class OrderEntity {
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate submitedAt;
 
-	@NotEmpty(message = "Vardas privalomas!")
-	@Size(min = 2, max = 70)
-	@Pattern(regexp = "^\\p{L}+(( )+(?:\\p{L}+))*$")
-	private String childName;
-
-	@NotEmpty(message = "Pavardė privaloma!")
-	@Size(min = 2, max = 70)
-	@Pattern(regexp = "^\\p{L}+((-)+(?:\\p{L}+))*$")
-	private String childSurname;
-
-	@NotEmpty(message = "Vaiko asmens kodas privalomas!")
-	@Pattern(regexp = "^(?!\\s*$)[0-9\\s]{11}$|", message = "Asmens kodą turi sudaryti 11 skaitmenų")
-	private String childPersonalCode;
-
-	@NotNull(message = "Vaiko gimimo data privaloma!")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate birthdate;
-
-	@NotNull(message = "Darželio kodas privalomas!")
+	@NotNull(message = "Knyga privaloma!")
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "serviceProvider", referencedColumnName="code")
 	private ServiceProvider serviceProvider;
 
-	@NotNull(message = "Privaloma nurodyti vaiko atstovą!")
-	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.DETACH })
+	@NotNull(message = "Klientas privalomas!")
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private User mainGuardian;
 	
@@ -68,24 +50,18 @@ public class OrderEntity {
 	public OrderEntity() {
 
 	}
-
-	public OrderEntity(
-			@NotEmpty(message = "Vardas privalomas!") @Size(min = 2, max = 70) @Pattern(regexp = "^\\p{L}+(?: \\p{L}+)*$") String childName,
-			@NotEmpty(message = "Pavardė privaloma!") @Size(min = 2, max = 70) @Pattern(regexp = "^\\p{L}+(?: \\p{L}+)*$") String childSurname,
-			@NotEmpty(message = "Vaiko asmens kodas privalomas!") @Pattern(regexp = "^(?!\\s*$)[0-9\\s]{11}$|", message = "Asmens kodą turi sudaryti 11 skaitmenų") String childPersonalCode,
-			@NotNull(message = "Vaiko gimimo data privaloma!") LocalDate birthdate,
-			@NotNull(message = "Darželio kodas privalomas!") ServiceProvider privateKindergarten,
-			@NotNull(message = "Privaloma nurodyti vaiko atstovą!") User mainGuardian,
-			boolean status){
+	
+	public OrderEntity(Long id, LocalDate submitedAt,
+			@NotNull(message = "Knyga privaloma!") ServiceProvider serviceProvider,
+			@NotNull(message = "Klientas privalomas!") User mainGuardian, boolean status) {
 		super();
-		this.childName = childName;
-		this.childSurname = childSurname;
-		this.childPersonalCode = childPersonalCode;
-		this.birthdate = birthdate;
-		this.serviceProvider = privateKindergarten;
+		this.id = id;
+		this.submitedAt = submitedAt;
+		this.serviceProvider = serviceProvider;
 		this.mainGuardian = mainGuardian;
-		this.status=false;
+		this.status = status;
 	}
+
 
 	public boolean isStatus() {
 		return status;
@@ -111,44 +87,13 @@ public class OrderEntity {
 		this.submitedAt = LocalDate.now();
 	}
 
-	public String getChildName() {
-		return childName;
-	}
 
-	public void setChildName(String childName) {
-		this.childName = childName;
-	}
-
-	public String getChildSurname() {
-		return childSurname;
-	}
-
-	public void setChildSurname(String childSurname) {
-		this.childSurname = childSurname;
-	}
-
-	public String getChildPersonalCode() {
-		return childPersonalCode;
-	}
-
-	public void setChildPersonalCode(String childPersonalCode) {
-		this.childPersonalCode = childPersonalCode;
-	}
-
-	public LocalDate getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(LocalDate birthdate) {
-		this.birthdate = birthdate;
-	}
-
-	public ServiceProvider getPrivateKindergarten() {
+	public ServiceProvider getServiceProvider() {
 		return serviceProvider;
 	}
 
-	public void setPrivateKindergarten(ServiceProvider privateKindergarten) {
-		this.serviceProvider = privateKindergarten;
+	public void setServiceProvider(ServiceProvider ServiceProvider) {
+		this.serviceProvider = ServiceProvider;
 	}
 
 	public User getMainGuardian() {

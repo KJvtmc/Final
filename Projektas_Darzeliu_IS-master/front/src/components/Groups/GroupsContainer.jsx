@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import '../../App.css';
 
 import GroupsInputForm from './GroupsInputForm';
+import GroupListContainer from './GroupListContainer';
 
 export class GroupsContainer extends Component {
 
@@ -16,10 +17,10 @@ export class GroupsContainer extends Component {
                             <GroupsInputForm />
                         </div>
 
-                        {/* <div className="col-12 col-sm-12 col-md-12 col-lg-9 pt-1">
+                        <div className="col-12 col-sm-12 col-md-12 col-lg-9 pt-1">
                             <h6 className="py-3"><b>Darželių sąrašas su laisvų vietų grupėse skaičiais</b></h6>
-                            <KindergartenListContainer />
-                        </div> */}
+                            <GroupListContainer />
+                        </div>
 
                     </div>
                 </div>

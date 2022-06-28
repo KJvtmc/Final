@@ -8,70 +8,38 @@ import it.akademija.user.UserDTO;
 import it.akademija.user.UserInfo;
 
 public class OrderDTO {
-	
-	private long id;
-
-	private String childName;
-
-	private String childSurname;
+	private Long id;
 
 	private LocalDate submitedAt;
-
-	private String childPersonalCode;
-
-	private LocalDate birthdate;
 	
 	private boolean status;
 
-	private ServiceProviderDTO privateKindergarten;
+	private ServiceProviderDTO book;
 
 	private UserInfo mainGuardian;
-
-	private UserDTO mainGuardianSec;
 
 	public OrderDTO() {
 
 	}
 
-	public OrderDTO(String childName, LocalDate submitedAt, String childSurname,
-			String childPersonalCode, LocalDate birthdate, ServiceProviderDTO privateKindergarten,
+	public OrderDTO(LocalDate submitedAt, ServiceProviderDTO privateKindergarten,
 			UserInfo mainGuardian, boolean status ) {
 		super();
-		this.childName = childName;
-		this.childSurname = childSurname;
 		this.submitedAt = submitedAt;
-		this.childPersonalCode = childPersonalCode;
-		this.birthdate = birthdate;
-		this.privateKindergarten = privateKindergarten;
+		this.book = privateKindergarten;
 		this.mainGuardian = mainGuardian;
 		this.status = status;
 	}
 
-	public OrderDTO(String childName, LocalDate submitedAt, String childSurname,
-			String childPersonalCode, LocalDate birthdate, ServiceProviderDTO privateKindergarten,
-			UserDTO mainGuardianSec, boolean status) {
-		super();
-		this.childName = childName;
-		this.childSurname = childSurname;
-		this.submitedAt = submitedAt;
-		this.childPersonalCode = childPersonalCode;
-		this.birthdate = birthdate;
-		this.privateKindergarten = privateKindergarten;
-		this.mainGuardianSec = mainGuardianSec;
-		this.status = status;
-	}
 
-	public OrderDTO(OrderEntity compensationApplication) {
+
+	public OrderDTO(OrderEntity order) {
 		super();
-		this.id = compensationApplication.getId();
-		this.childName = compensationApplication.getChildName();
-		this.childSurname = compensationApplication.getChildSurname();
-		this.childPersonalCode = compensationApplication.getChildPersonalCode();
-		this.submitedAt = compensationApplication.getSubmitedAt();
-		this.birthdate = compensationApplication.getBirthdate();
-		this.privateKindergarten = privateKindergarten.from(compensationApplication.getPrivateKindergarten());
-		this.mainGuardian = mainGuardian.from(compensationApplication.getMainGuardian());
-		this.status = compensationApplication.isStatus();
+		this.id = order.getId();
+		this.submitedAt = order.getSubmitedAt();
+		this.book = book.from(order.getServiceProvider());
+		this.mainGuardian = mainGuardian.from(order.getMainGuardian());
+		this.status = order.isStatus();
 	}
 
 	/**
@@ -85,48 +53,30 @@ public class OrderDTO {
 		return new OrderDTO(compensationApplication);
 	}
 
-	public long getId() {
+	
+
+	public Long getId() {
 		return id;
 	}
 
-	public String getChildName() {
-		return childName;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setChildName(String childName) {
-		this.childName = childName;
+	public ServiceProviderDTO getBook() {
+		return book;
 	}
 
-	public String getChildSurname() {
-		return childSurname;
-	}
-
-	public void setChildSurname(String childSurname) {
-		this.childSurname = childSurname;
-	}
-
-	public String getChildPersonalCode() {
-		return childPersonalCode;
-	}
-
-	public void setChildPersonalCode(String childPersonalCode) {
-		this.childPersonalCode = childPersonalCode;
-	}
-
-	public LocalDate getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(LocalDate birthdate) {
-		this.birthdate = birthdate;
+	public void setBook(ServiceProviderDTO book) {
+		this.book = book;
 	}
 
 	public ServiceProviderDTO getPrivateKindergarten() {
-		return privateKindergarten;
+		return book;
 	}
 
 	public void setPrivateKindergarten(ServiceProviderDTO privateKindergarten) {
-		this.privateKindergarten = privateKindergarten;
+		this.book = privateKindergarten;
 	}
 
 	public UserInfo getMainGuardian() {
@@ -141,18 +91,6 @@ public class OrderDTO {
 		return submitedAt;
 	}
 
-	public void setSubmitedAt(LocalDate submitedAt) {
-		this.submitedAt = submitedAt;
-	}
-
-	public UserDTO getMainGuardianSec() {
-		return mainGuardianSec;
-	}
-
-	public void setMainGuardianSec(UserDTO mainGuardianSec) {
-		this.mainGuardianSec = mainGuardianSec;
-	}
-
 	public boolean isStatus() {
 		return status;
 	}
@@ -160,5 +98,10 @@ public class OrderDTO {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
+
+	public void setSubmitedAt(LocalDate submitedAt) {
+		this.submitedAt = submitedAt;
+	}
+
 
 }
