@@ -26,7 +26,8 @@ import CompensationApplicationListContainer from "./components/17CompensationApp
 import NewAccountContainer from "./components/01Login/NewAccountContainer";
 import ItemContainer from "./components/Items/ItemContainer"
 import GroupsContainer from "./components/Groups/GroupsContainer"
-
+import BookList from "./components/0UserPages/BookList"
+import MyBookList from "./components/0UserPages/MyBookList"
 var initState = {
   isAuthenticated: null,
   username: null,
@@ -174,8 +175,13 @@ function App() {
                     />
                     <Route
                       exact
-                      path="/prasymai/naujas_kompensacija"
-                      component={CreateCompensationApplicationFormContainer}
+                      path="/knygos"
+                      component={BookList}
+                    />
+                    <Route
+                      exact
+                      path="/manoknygos"
+                      component={MyBookList}
                     />
                     <Route
                       exact

@@ -4,11 +4,10 @@ Aplication functionality is based on exam assignment.
 
 System user roles and their authorities:
 
-| ROLES | AUTHORITIES |
+| ROLES | AUTHORITIES | LOGIN |
 | --- | --- |
-| ADMIN |  create user, delete user, reset user password, review system logs, update own account, create, update, delete books, groups and delete, update orders |
-
-| USER | reate, edit, delete a book booking, get user data, update and delete own account |
+| ADMIN |  create user, delete user, reset user password, review system logs, update own account, create, update, delete books, groups and delete, update orders | name: admin@admin.lt password: admin@admin.lt |
+| USER | reate, edit, delete a book booking, get user data, update and delete own account |  name: user@user.lt password: user@user.lt |
 
 #### Technologies used: 
 - React 17.0.2,  Boostrap 5.1.3

@@ -18,7 +18,7 @@ class GroupListTable extends Component {
             search } = this.props;
         if (search !== "" && groups.length === 0) {
             return (
-                <NotFoundMessage message="Darželių pagal įvestą pavadinimą nerasta" />
+                <NotFoundMessage message="Duomenų pagal įvestą pavadinimą nerasta" />
             )
         } else {
             return (
@@ -30,7 +30,7 @@ class GroupListTable extends Component {
                             <tr >
                                 <th>Pavadinimas</th>
                                 <th>Redaguoti duomenis</th>
-                                <th className="deleteColumn">Ištrinti darželį</th>
+                                <th className="deleteColumn">Ištrinti</th>
                             </tr>
                         </thead>
                         <tbody >

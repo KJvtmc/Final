@@ -144,7 +144,10 @@ class KindergartenListTable extends Component {
                                                     <td>{darzelis.description}</td>
                                                     <td>{darzelis.pages}</td>
                                                     <td>{darzelis.serviceGroup}</td>
-
+                                                    <td>{
+                                                        console.log(darzelis)
+                                                    // darzelis.serviceGroup.map(g => (<p>{g.name}</p>)) 
+                                                    }</td>
                                                     <td>
                                                         <button
                                                             className="btn btn-outline-primary btn-sm btn-block"

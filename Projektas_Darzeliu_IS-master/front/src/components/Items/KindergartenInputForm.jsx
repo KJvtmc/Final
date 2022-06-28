@@ -4,55 +4,61 @@ import "../../App.css";
 import http from "../10Services/httpService";
 import apiEndpoint from "../10Services/endpoint";
 import swal from "sweetalert";
+import { Row } from "react-bootstrap";
 
-function GroupsInputForm() {
+function KindergartenInputForm() {
   const initKindergartenData = {
-    id: 0,
+    code: "",
     name: "",
-    serviceItems:[],
+    address: "",
+    phone: "",
+    email: "",
+    serviceGroup:[]
   };
 
-
+  var [selectedGroup, setSelectedGroup] = useState();
   var savingStatus = false;
 
   const [data, setData] = useState(initKindergartenData);
   const [groups, setGroups] = useState([])
   const history = useHistory();
 
-  // useEffect(() => {
-  //   http
-  //     .get(`${apiEndpoint}/api/serviceGroup/manager/groups`)
-  //     .then((response) => {
-  //       console.log(response);
-  //       if (!response.data)
-  //       setGroups(response.data);
-  //     })
-  //     .catch((error) => {
-  //       swal({
-  //         text: "Įvyko klaida nuskaitant. " + error.response.data,
-  //         button: "Gerai",
-  //       });
-  //     });
-  // }, [setGroups]);
+  useEffect(() => {
+    console.log("use")
+    http
+    .get(`${apiEndpoint}/api/ServiceGroup/manager/groups`)
+    .then((response) => {
+        // console.log(response)
+        setGroups(response.data);
+      })
+      .catch((error) => {
+        swal({
+          text: "Įvyko klaida nuskaitant. ",
+          button: "Gerai",
+        });
+      });
+  }, []);
+
+
 
   const handleSubmit = (event) => {
+    console.log("handleSubmit")
     event.preventDefault();
     //console.log("saugoma į serverį");
-    //console.log(data);
+    console.log(data);
     savingStatus = true;
     http
-      .post(`${apiEndpoint}/api/ServiceGroup/manager/createServiceGroup`, data)
+      .post(`${apiEndpoint}/api/serviceProvider/manager/createServiceProvider`, data)
       .then((response) => {
-        console.log(data);
-        console.log(response);
+        //console.log("įrašyta: " + response.data);
         swal({
-          text: "Naujas produktas  pridėtas sėkmingai!",
+          text: "Naujas darželis „" + data.name + "“ pridėtas sėkmingai!",
           button: "Gerai",
         });
         savingStatus = false;
         resetForm(event);
         history.push("/new");
-        history.replace("/grupes")
+        history.replace("/tiekejai")
       })
       .catch((error) => {
         if (error.response.status === 409) {
@@ -94,53 +100,94 @@ function GroupsInputForm() {
 
   const handleChange = (event) => {
     // validateField(event);
-   if(event.target.name ==="id"){
-    console.log(event.target.value)
-    setData({
-      ...data,
-      [event.target.name]: 1*event.target.value,
-    })
-   }else{
+    console.log("handleChange")
     setData({
       ...data,
       [event.target.name]: event.target.value,
     });
-   }
-    
     
   };
+
+  // useEffect(() => {
+  //   getList()
+  // }, [data])
+  
+  // function getList (){
+  //   return (
+  //   <li>
+
+  //   {data.serviceGroup.map((group)=>(
+  //     <ul key={group.name}>{group.name}</ul>
+  //   ))}
+    
+  // </li>)
+  
+  // }
+  useEffect(() => {
+    addGroup()
+  }, [selectedGroup])
+
+  function addGroup () {
+    console.log("addGroup")
+    let group = groups.find(g=>g.name === selectedGroup)
+    if (group){
+    let groupsNew  =[...data.serviceGroup]
+    groupsNew.push(group)
+    setData({
+      ...data,
+      serviceGroup: [...groupsNew],
+    });
+    }
+  }
+
+  const removeGroup = (e, name) =>{
+    e.preventDefault()
+    console.log("removeGroup")
+    let group = groups.find(g=>g.name === name)
+    if (group){
+    let groupsNew  =[...data.serviceGroup]
+    groupsNew  =groupsNew.filter(gr=>gr.name!==name)
+    setData({
+      ...data,
+      serviceGroup: [...groupsNew],
+    });
+    }
+  }
+
 
   const resetForm = (event) => {
     event.preventDefault();
     setData(initKindergartenData);
   };
 
+  console.log("prerender")
+  // console.log(data)
   return (
     <div>
       <form onSubmit={handleSubmit} onReset={resetForm}>
         <h6 className="py-3">
-          <b>Pridėti naują kategoriją </b>
+          <b>Pridėti naują knygą </b>
         </h6>
-        {/* <div className="mb-3">
+        <div className="mb-3">
           <label htmlFor="id" className="form-label">
-            Kodas <span className="fieldRequired">*</span>
+            Knygos ISBN kodas <span className="fieldRequired">*</span>
           </label>
           <input
-            type="number"
+            type="text"
             className="form-control"
-            name="id"
-            id="id"
-            value={data.id}
+            name="code"
+            id="code"
+            value={data.code}
             onChange={handleChange}
             onInvalid={validateField}
             required
-
-            placeholder="123456789"
+            // pattern="\d{9}"
+            placeholder="123456789-0"
             data-toggle="tooltip"
             data-placement="top"
             title="Įveskite įstaigos (darželio) kodą (9 skaitmenys)"
           />
-        </div> */}
+        </div>
 
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
@@ -155,9 +202,9 @@ function GroupsInputForm() {
             onChange={handleChange}
             onInvalid={validateField}
             required
-            // minLength="3"
-            // maxLength="50"
-            // pattern="[^ ][A-zÀ-ž0-9\x22 \-'.,]*"
+            minLength="3"
+            maxLength="50"
+            pattern="[^ ][A-zÀ-ž0-9\x22 \-'.,]*"
             placeholder="3-50 simbolių"
             data-toggle="tooltip"
             data-placement="top"
@@ -165,8 +212,8 @@ function GroupsInputForm() {
           />
         </div>
 
-        {/* <div className="mb-3">
-          <label htmlFor="description" className="form-label">
+        <div className="mb-3">
+          <label htmlFor="address" className="form-label">
             Aprašymas <span className="fieldRequired">*</span>
           </label>
           <input
@@ -181,35 +228,76 @@ function GroupsInputForm() {
             placeholder="Aprašymas"
             data-toggle="tooltip"
             data-placement="top"
-            title="Įveskite darželio aprašymą"
-            // pattern="[^\n]{3,50}"
+            title="Įveskite darželio adresą"
+            pattern="[^\n]{3,50}"
           />
-        </div> */}
+        </div>
 
-        {/* <div className="mb-3">
-          <label htmlFor="elderate" className="form-label">
-            Grupė <span className="fieldRequired">*</span>
+        <div className="mb-3">
+          <label htmlFor="director" className="form-label">
+            Puslapių skaičius <span className="fieldRequired">*</span>
           </label>
-          <select
-            type="text"
-            className="form-select"
-            name="group"
-            id="group"
-            value={data.serviceGroup}
+          <input
+            type="number"
+            className="form-control"
+            name="pages"
+            id="pages"
+            value={data.pages}
             onChange={handleChange}
             onInvalid={validateField}
+            required
+            placeholder="100"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Įveskite telefoną"
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="selectedGroup" className="form-label">
+            Grupė <span className="fieldRequired">*</span>
+          </label>
+          <div className="row">
+          <div className="col">
+            <select
+            type="text"
+            className="form-select"
+            name="selectedGroup"
+            id="selectedGroup"
+            value={selectedGroup}
+            onChange={(event)=>setSelectedGroup(event.target.value)}
+            // onInvalid={validateField}
             // required
             placeholder="serviceGroup"
             data-toggle="tooltip"
             data-placement="top"
             title="Pasirinkite"
           >
-            <option value="" disabled hidden label="Pasirinkite" />
+
             {groups.map((option) => (
-              <option value={option} label={option} key={option} />
+              <option value={option.name} label={option.name} key={option.id} />
             ))}
           </select>
-        </div> */}
+          </div>
+          <div className="col-4">
+          
+          </div>
+          </div>
+
+        </div>
+        <ul>
+          {data.serviceGroup.map((option) => (
+              <div key={option.name} className="row">
+              <div className="col-9">
+
+                <li key={option.id} > {option.name}</li> 
+              </div>
+              <div className="col-3">
+              <button  onClick={(e)=>removeGroup(e, option.name)} className="btn btn-outline-danger ms-2 mb-3"> - </button>
+              </div>
+              </div>
+            ))}
+        </ul>
         
 
         <button
@@ -232,4 +320,4 @@ function GroupsInputForm() {
   );
 }
 
-export default GroupsInputForm;
+export default KindergartenInputForm;

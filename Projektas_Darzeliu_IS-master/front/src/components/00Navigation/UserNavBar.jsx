@@ -38,7 +38,11 @@ function Navigation(props) {
 
                          {/* Added dropdown to link different type of applications */}
                             <li className="nav-item me-1">
-                            <NavLink className="nav-link" id="navUserNewApplicationGet"  to={"/paslaugos"}>Paslaugos</NavLink>   
+                            <NavLink className="nav-link" id="navUserNewApplicationGet"  to={"/knygos"}>Ieškoti knygos</NavLink>   
+                            </li>
+
+                            <li className="nav-item me-1">
+                            <NavLink className="nav-link" id="navUserNewApplicationGet"  to={"/manoknygos"}>Mėgstamos knygos</NavLink>   
                             </li>
 
                             <li className="nav-item me-1">

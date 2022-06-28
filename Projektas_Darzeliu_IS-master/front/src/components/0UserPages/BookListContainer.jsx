@@ -5,10 +5,10 @@ import http from '../10Services/httpService';
 import apiEndpoint from '../10Services/endpoint';
 import '../../App.css';
 
-import KindergartenListTable from './KindergartenListTable';
+import BookListTable from './BookListTable';
 import Pagination from '../08CommonComponents/Pagination';
 import SearchBox from '../08CommonComponents/SeachBox';
-export class KindergartenListContainer extends Component {
+export class BookListContainer extends Component {
 
     constructor(props) {
         super(props);
@@ -206,7 +206,7 @@ export class KindergartenListContainer extends Component {
                     placeholder={placeholder}
                 />
 
-                <KindergartenListTable
+                <BookListTable
                     knygos={knygos}
                     kategorijos={kategorijos}
                     inEditMode={inEditMode}
@@ -234,4 +234,4 @@ export class KindergartenListContainer extends Component {
     }
 }
 
-export default KindergartenListContainer;
+export default BookListContainer;

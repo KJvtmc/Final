@@ -99,7 +99,7 @@ export class GroupListContainer extends Component {
     handleDelete = (item) => {
 
         swal({
-            text: "Ar tikrai norite ištrinti darželį?",
+            text: "Ar tikrai norite ištrinti?",
             buttons: ["Ne", "Taip"],
             dangerMode: true,
         }).then((actionConfirmed) => {

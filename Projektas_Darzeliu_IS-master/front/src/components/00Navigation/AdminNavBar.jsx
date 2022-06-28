@@ -27,16 +27,16 @@ function Navigation(props) {
                             </li>
 
                             <li className="nav-item me-2">
-                                <NavLink className="nav-link" id="navAdminProviders" to={"/tiekejai"}>Tiekėjai</NavLink>
+                                <NavLink className="nav-link" id="navAdminProviders" to={"/tiekejai"}>Knygos</NavLink>
                             </li>
 
                             <li className="nav-item me-2">
-                                <NavLink className="nav-link" id="navAdminGroups" to={"/grupes"}>Grupės</NavLink>
+                                <NavLink className="nav-link" id="navAdminGroups" to={"/grupes"}>Kategorijos</NavLink>
                             </li>
 
-                            <li className="nav-item me-2">
+                            {/* <li className="nav-item me-2">
                                 <NavLink className="nav-link" id="navAdminItems" to={"/produktai"}>Produktai</NavLink>
-                            </li>
+                            </li> */}
 
                             <li className="nav-item me-2">
                                 <NavLink className="nav-link" id="navAdminCompensationsList" to={"/prasymai"}>Prašymai</NavLink>

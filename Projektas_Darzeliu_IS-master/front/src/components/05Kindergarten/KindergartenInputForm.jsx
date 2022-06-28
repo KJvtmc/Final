@@ -10,10 +10,10 @@ function KindergartenInputForm() {
   const initKindergartenData = {
     code: "",
     name: "",
-    address: "",
-    phone: "",
-    email: "",
-    serviceGroup:[]
+    description: "",
+    pages: "",
+    image: "",
+    serviceGroup:{}
   };
 
   var [selectedGroup, setSelectedGroup] = useState();
@@ -166,11 +166,11 @@ function KindergartenInputForm() {
     <div>
       <form onSubmit={handleSubmit} onReset={resetForm}>
         <h6 className="py-3">
-          <b>Pridėti naują tiekėją </b>
+          <b>Pridėti naują knygą </b>
         </h6>
         <div className="mb-3">
-          <label htmlFor="id" className="form-label">
-            Įstaigos kodas <span className="fieldRequired">*</span>
+          <label htmlFor="code" className="form-label">
+            Knygos ISBN kodas <span className="fieldRequired">*</span>
           </label>
           <input
             type="text"
@@ -181,8 +181,8 @@ function KindergartenInputForm() {
             onChange={handleChange}
             onInvalid={validateField}
             required
-            pattern="\d{9}"
-            placeholder="123456789"
+            // pattern="\d{9}"
+            placeholder="123456789-0"
             data-toggle="tooltip"
             data-placement="top"
             title="Įveskite įstaigos (darželio) kodą (9 skaitmenys)"
@@ -214,18 +214,18 @@ function KindergartenInputForm() {
 
         <div className="mb-3">
           <label htmlFor="address" className="form-label">
-            Adresas <span className="fieldRequired">*</span>
+            Aprašymas <span className="fieldRequired">*</span>
           </label>
           <input
             type="text"
             className="form-control"
-            name="address"
-            id="address"
-            value={data.address}
+            name="description"
+            id="description"
+            value={data.description}
             onChange={handleChange}
             onInvalid={validateField}
             required
-            placeholder="Adresas"
+            placeholder="Aprašymas"
             data-toggle="tooltip"
             data-placement="top"
             title="Įveskite darželio adresą"
@@ -235,43 +235,24 @@ function KindergartenInputForm() {
 
         <div className="mb-3">
           <label htmlFor="director" className="form-label">
-            Telefonas <span className="fieldRequired">*</span>
+            Puslapių skaičius <span className="fieldRequired">*</span>
           </label>
           <input
             type="text"
             className="form-control"
-            name="phone"
-            id="phone"
-            value={data.phone}
+            name="pages"
+            id="pages"
+            value={data.pages}
             onChange={handleChange}
             onInvalid={validateField}
             required
-            placeholder="+37000000000"
+            placeholder="100"
             data-toggle="tooltip"
             data-placement="top"
             title="Įveskite telefoną"
           />
         </div>
 
-        <div className="mb-3">
-          <label htmlFor="director" className="form-label">
-            El.paštas <span className="fieldRequired">*</span>
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            name="email"
-            id="email"
-            value={data.email}
-            onChange={handleChange}
-            onInvalid={validateField}
-            required
-            placeholder="email@email.lt"
-            data-toggle="tooltip"
-            data-placement="top"
-            title="Įveskite pašt2"
-          />
-        </div>
         <div className="mb-3">
           <label htmlFor="selectedGroup" className="form-label">
             Grupė <span className="fieldRequired">*</span>
@@ -294,7 +275,7 @@ function KindergartenInputForm() {
           >
 
             {groups.map((option) => (
-              <option value={option.name} label={option.name} key={option.name} />
+              <option value={option.name} label={option.name} key={option.id} />
             ))}
           </select>
           </div>
@@ -304,19 +285,19 @@ function KindergartenInputForm() {
           </div>
 
         </div>
-        <ul>
+        {/* <ul>
           {data.serviceGroup.map((option) => (
               <div key={option.name} className="row">
               <div className="col-9">
 
-                <li key={option.name} > {option.name}</li> 
+                <li key={option.id} > {option.name}</li> 
               </div>
               <div className="col-3">
               <button  onClick={(e)=>removeGroup(e, option.name)} className="btn btn-outline-danger ms-2 mb-3"> - </button>
               </div>
               </div>
             ))}
-        </ul>
+        </ul> */}
         
 
         <button
